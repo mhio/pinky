@@ -109,6 +109,8 @@ describe('test', function(){
 
   it('outerSettles', async function(){
     const [ p, resolve, reject ] = outerSettle()
+    expect(resolve).to.be.a('function')
+    expect(reject).to.be.a('function')
     resolve(true)
     const res = await p
     expect(res).to.equal(true)
