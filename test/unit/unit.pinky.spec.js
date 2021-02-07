@@ -3,7 +3,7 @@ chai.use(require('chai-subset'))
 const { expect } = chai
 const { delay, waitFor, map, mapSeries, workerAll, firstWithoutError, allProps } = require('../../pinky')
 const delayReturnMs = (v) => delay(v).then(() => v)
-const delayReturnMsEntries = ([i,v]) => {
+const delayReturnMsEntries = ([,v]) => {
   if (v === false) throw new Error('false')
   return delay(v).then(() => v)
 }

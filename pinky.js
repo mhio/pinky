@@ -85,6 +85,12 @@ async function firstWithoutError(iterable) {
 }
 
 
+class AggregateError extends Error {
+  constructor(message, errors){
+    super(message)
+    this.errors = errors
+  }
+}
 /**
  * Run a bunch of promises, if the first fails return the next. 
  * All promises start resolving immediately. 
@@ -110,7 +116,7 @@ async function firstInSeriesWithoutError(iterable) {
  * @param     {object}    obj     - The object to resolve properties of
  * @return    {object}    obj     - New object of resolved promise properties
  */
-async function allProps(obj, options){
+async function allProps(obj){
   const promises = {}
   for (let key in obj) {
     const promise = Promise.resolve(obj[key])
@@ -174,4 +180,5 @@ module.exports = {
   delay,
   outerSettle,
   waitFor,
+  AggregateError,
 }
