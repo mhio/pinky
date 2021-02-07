@@ -1,4 +1,6 @@
 
+function noop(){}
+
 /**
  * delay for ms
  */
@@ -172,6 +174,7 @@ async function waitFor (timeout_ms, condition_fn, { wait_ms = 1000, label = 'con
 
 // Exports
 module.exports = { 
+  noop,
   map,
   mapSeries,
   workerAll,
