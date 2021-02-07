@@ -1,7 +1,7 @@
 const chai = require('chai')
 chai.use(require('chai-subset'))
 const { expect } = chai
-const { delay, waitFor, map, mapSeries, workerAll, firstWithoutError, allProps } = require('../../pinky')
+const { delay, waitFor, map, mapSeries, workerAll, firstInSeriesWithoutError, firstWithoutError, allProps } = require('../../pinky')
 const delayReturnMs = (v) => delay(v).then(() => v)
 const delayReturnMsEntries = ([,v]) => {
   if (v === false) throw new Error('false')
@@ -48,6 +48,25 @@ describe('test', function(){
     const res = await firstWithoutError([Promise.reject('no'),5,1], delayReturnMs)
     expect(res).to.eql(5)
   })
+  it('should return first in series without error', async function(){
+    const res = await firstInSeriesWithoutError([5,5,1])
+    expect(res).to.eql(5)
+  })
+  it('should return first in series without error', async function(){
+    const res = await firstInSeriesWithoutError([Promise.reject(),5,1])
+    expect(res).to.eql(5)
+  })
+  it('should return first in series without error', async function(){
+    try { 
+      await firstInSeriesWithoutError([Promise.reject('no'),Promise.reject('nope')])
+      expect.fail('Should have thrown')
+    } catch (err) {
+      expect(err.message).to.equal('Multiple errors')
+      expect(err.errors).to.be.an('array')
+      expect(err.errors).to.have.lengthOf(2)
+    }
+  })
+  
   
   it('allProps', async function(){
     const res = await allProps({ 1:1, 2:Promise.resolve(2), 3:delayReturnMs(3) })

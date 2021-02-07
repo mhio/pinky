@@ -86,8 +86,8 @@ async function firstWithoutError(iterable) {
 
 
 class AggregateError extends Error {
-  constructor(message, errors){
-    super(message)
+  constructor(errors){
+    super('Multiple errors')
     this.errors = errors
   }
 }
@@ -176,6 +176,7 @@ module.exports = {
   mapSeries,
   workerAll,
   firstWithoutError,
+  firstInSeriesWithoutError,
   allProps,
   delay,
   outerSettle,
