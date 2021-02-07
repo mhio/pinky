@@ -144,7 +144,8 @@ function outerSettle(){
     outerResolve = resolve
     outerReject = reject
   })
-  return { promise, resolve: outerResolve, reject: outerReject }
+  //return { promise, resolve: outerResolve, reject: outerReject }
+  return [ promise, outerResolve, outerReject ]
 }
 
 /**

@@ -1,7 +1,17 @@
 const chai = require('chai')
 chai.use(require('chai-subset'))
 const { expect } = chai
-const { delay, waitFor, map, mapSeries, workerAll, firstInSeriesWithoutError, firstWithoutError, allProps } = require('../../pinky')
+const {
+  outerSettle,
+  delay,
+  waitFor,
+  map,
+  mapSeries,
+  workerAll,
+  firstInSeriesWithoutError,
+  firstWithoutError,
+  allProps
+} = require('../../pinky')
 const delayReturnMs = (v) => delay(v).then(() => v)
 const delayReturnMsEntries = ([,v]) => {
   if (v === false) throw new Error('false')
@@ -95,4 +105,13 @@ describe('test', function(){
       expect(err.details.condition_fn).to.be.a('function')
     }
   })
+
+
+  it('outerSettles', async function(){
+    const [ p, resolve, reject ] = outerSettle()
+    resolve(true)
+    const res = await p
+    expect(res).to.equal(true)
+  })
+
 })
