@@ -1,0 +1,21 @@
+{
+  "name": "@mhio/pinky",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha test/unit test/int",
+    "test:unit": "mocha test/unit",
+    "test:int": "mocha test/int",
+    "test:coverage": "nyc _mocha test/unit test/int && nyc report -r html && nyc check-coverage",
+    "test:watch": "yarn run watch 'yarn run build && mocha -b test/unit test/int || exit 1'",
+    "watch": "nodemon -i test/output/ -x"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-subset": "^1.6.0",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {}
+}
