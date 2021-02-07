@@ -54,10 +54,26 @@ describe('test', function(){
     expect(res).to.eql({1:1, 2:2, 3:3})
   })
 
-  it('waitsFor', async function(){
+  it('waitFor', async function(){
     let state = false
     setTimeout(() => state = true, 25) 
     const res = await waitFor(250, () => state === true, { wait_ms: 10 })
     expect(res).to.containSubset({ count: 2 })
+  })
+  it('waitFor timeout', async function(){
+    const state = false
+    try {
+      await waitFor(10, () => state === true, { wait_ms: 5 })
+      expect.fail('Should have errored')
+    } catch (err) {
+      expect(err.message).to.match(/Timeout/)
+      expect(err.details).to.be.an('object')
+      expect(err.details).to.containSubset({
+        wait_ms: 5,
+        label: 'condition',
+        timeout_ms: 10,
+      })
+      expect(err.details.condition_fn).to.be.a('function')
+    }
   })
 })
