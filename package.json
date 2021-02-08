@@ -1,7 +1,7 @@
 {
   "name": "@mhio/pinky",
   "version": "0.2.2",
-  "main": "pinky.js",
+  "main": "src/pinky.js",
   "license": "MIT",
   "scripts": {
     "test": "mocha test/unit test/int",
@@ -10,8 +10,12 @@
     "test:coverage": "nyc _mocha test/unit test/int && nyc report -r html && nyc check-coverage",
     "test:watch": "yarn run watch 'yarn run build && mocha -b test/unit test/int || exit 1'",
     "test:lint": "eslint pinky.js test/",
+    "build": "set -uex; yarn run build:doc",
+    "build:doc": "set -uex; yarn run build:doc:html; yarn run build:doc:md",
+    "build:doc:html": "jsdoc -c .jsdoc.json -d doc/html/ src/",
+    "build:doc:md": "jsdoc2md -c ./.jsdoc.json --separators -f src/* > doc/API.md",
     "release:test": "set -uex; yarn test; npm version prerelease; npm publish --access public --tag testing",
-    "release:patch": "set -uex; git pull; rm -rf node_modules; yarn; yarn run test:coverage; yarn run test:lint; npm version patch; git push; npm publish --access public; git push --tags",
+    "release:patch": "set -uex; git pull; rm -rf node_modules; yarn; yarn run test:coverage; yarn run test:lint; yarn run build; npm version patch; git push; npm publish --access public; git push --tags",
     "watch": "nodemon -i test/output/ -x"
   },
   "devDependencies": {

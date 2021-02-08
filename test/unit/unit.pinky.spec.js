@@ -11,7 +11,7 @@ const {
   firstInSeriesWithoutError,
   firstWithoutError,
   allProps
-} = require('../../pinky')
+} = require('../../src/pinky')
 const delayReturnMs = (v) => delay(v).then(() => v)
 const delayReturnMsEntries = ([,v]) => {
   if (v === false) throw new Error('false')
