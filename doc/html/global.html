@@ -205,7 +205,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line121">line 121</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line123">line 123</a>
     </li></ul></dd>
     
 
@@ -263,7 +263,7 @@
     
 
     
-    <h4 class="name" id="delay"><span class="type-signature">(async) </span>delay<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="delay"><span class="type-signature">(async) </span>delay<span class="signature">(ms)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
     
 
     
@@ -280,6 +280,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ms</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The milliseconds to delay for</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -315,7 +364,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line7">line 7</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -340,6 +389,24 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -401,13 +468,18 @@ All promises start resolving immediately.</p>
 
             <td class="type">
             
+                
+<span class="param-type">Iterable.&lt;Promise></span>
+
+
+            
             </td>
 
             
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The iterable</p></td>
         </tr>
 
     
@@ -448,7 +520,7 @@ All promises start resolving immediately.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line103">line 103</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line105">line 105</a>
     </li></ul></dd>
     
 
@@ -556,13 +628,18 @@ All promises start resolving immediately.</p>
 
             <td class="type">
             
+                
+<span class="param-type">Iterable.&lt;Promise></span>
+
+
+            
             </td>
 
             
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The iterable</p></td>
         </tr>
 
     
@@ -603,7 +680,7 @@ All promises start resolving immediately.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line78">line 78</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line80">line 80</a>
     </li></ul></dd>
     
 
@@ -661,7 +738,7 @@ All promises start resolving immediately.</p>
     
 
     
-    <h4 class="name" id="map"><span class="type-signature">(async) </span>map<span class="signature">(iterator, asyncFn)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="map"><span class="type-signature">(async) </span>map<span class="signature">(iterator, asyncFn)</span><span class="type-signature"> &rarr; {Promise.&lt;Array>}</span></h4>
     
 
     
@@ -710,13 +787,18 @@ All promises start resolving immediately.</p>
 
             <td class="type">
             
+                
+<span class="param-type">Iterable.&lt;Any></span>
+
+
+            
             </td>
 
             
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The iterator</p></td>
         </tr>
 
     
@@ -780,7 +862,7 @@ All promises start resolving immediately.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line24">line 24</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -809,7 +891,9 @@ All promises start resolving immediately.</p>
 
         
 <div class="param-desc">
-    <p>{ description_of_the_return_value }</p>
+    <ul>
+<li>Array of all resolved promise values</li>
+</ul>
 </div>
 
 
@@ -820,7 +904,7 @@ All promises start resolving immediately.</p>
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type">Promise.&lt;Array></span>
 
 
     </dd>
@@ -838,7 +922,7 @@ All promises start resolving immediately.</p>
     
 
     
-    <h4 class="name" id="mapSeries"><span class="type-signature">(async) </span>mapSeries<span class="signature">(iterator, asyncFn)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="mapSeries"><span class="type-signature">(async) </span>mapSeries<span class="signature">(iterator, asyncFn)</span><span class="type-signature"> &rarr; {Promise.&lt;Array>}</span></h4>
     
 
     
@@ -887,13 +971,18 @@ All promises start resolving immediately.</p>
 
             <td class="type">
             
+                
+<span class="param-type">Iterable.&lt;Any></span>
+
+
+            
             </td>
 
             
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The iterator</p></td>
         </tr>
 
     
@@ -957,7 +1046,7 @@ All promises start resolving immediately.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line39">line 39</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -986,7 +1075,9 @@ All promises start resolving immediately.</p>
 
         
 <div class="param-desc">
-    <p>{ description_of_the_return_value }</p>
+    <ul>
+<li>Array of all resolved values</li>
+</ul>
 </div>
 
 
@@ -997,7 +1088,7 @@ All promises start resolving immediately.</p>
     </dt>
     <dd>
         
-<span class="param-type">Promise</span>
+<span class="param-type">Promise.&lt;Array></span>
 
 
     </dd>
@@ -1068,7 +1159,7 @@ Allows you to resolve/reject the promise out of the promise scope</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line140">line 140</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line142">line 142</a>
     </li></ul></dd>
     
 
@@ -1156,7 +1247,7 @@ Allows you to resolve/reject the promise out of the promise scope</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line155">line 155</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line157">line 157</a>
     </li></ul></dd>
     
 
@@ -1265,13 +1356,18 @@ Resulting array is in worker order, then work started order, so doesn't match in
 
             <td class="type">
             
+                
+<span class="param-type">Iterable.&lt;Any></span>
+
+
+            
             </td>
 
             
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The iterator of values to use</p></td>
         </tr>
 
     
@@ -1335,7 +1431,7 @@ Resulting array is in worker order, then work started order, so doesn't match in
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line56">line 56</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line58">line 58</a>
     </li></ul></dd>
     
 

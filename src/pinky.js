@@ -3,6 +3,8 @@ function noop(){}
 
 /**
  * delay for ms
+ * @param      {Number}           ms            - The milliseconds to delay for
+ * @return     {Promise}   
  */
 async function delay(ms) {
   let timer
@@ -17,9 +19,9 @@ async function delay(ms) {
 /**
  * map an async function across an iterable
  *
- * @param      {<type>}    iterator  The iterator
- * @param      {Function}  asyncFn  The asynchronous function
- * @return     {Promise}   { description_of_the_return_value }
+ * @param      {Iterable.<Any>}   iterator      - The iterator
+ * @param      {Function}         asyncFn       - The asynchronous function
+ * @return     {Promise.<Array>}                - Array of all resolved promise values
  */
 async function map(iterator, asyncFn){
   const results = []
@@ -32,9 +34,9 @@ async function map(iterator, asyncFn){
 /**
  * map an async function in series across an iterable
  *
- * @param      {<type>}    iterator  The iterator
- * @param      {Function}  asyncFn  The asynchronous function
- * @return     {Promise}   { description_of_the_return_value }
+ * @param      {Iterable.<Any>}    iterator     - The iterator
+ * @param      {Function}          asyncFn      - The asynchronous function
+ * @return     {Promise.<Array>}                - Array of all resolved values
  */
 async function mapSeries(iterator, asyncFn){
   const results = []
@@ -49,7 +51,7 @@ async function mapSeries(iterator, asyncFn){
  * Resulting array is in worker order, then work started order, so doesn't match initial order.
  *
  * @param      {number}    number_of_workers    - Number of functions to execute
- * @param      {<type>}    iterator_in          - The iterator of values to use
+ * @param      {Iterable.<Any>}    iterator_in          - The iterator of values to use
  * @param      {Function}  asyncFn             - The async function
  * @return     {Promise<Array>}                 - Unordered array of resolved values
  */
@@ -72,7 +74,7 @@ async function workerAll(number_of_workers, iterator_in, asyncFn){
  * Run a bunch of promises, if the first fails return the next. 
  * All promises start resolving immediately. 
  *
- * @param      {<type>}   iterable  The iterable
+ * @param      {Iterable.<Promise>}   iterable  The iterable
  * @return     {Promise}  { description_of_the_return_value }
  */
 async function firstWithoutError(iterable) {
@@ -97,7 +99,7 @@ class AggregateError extends Error {
  * Run a bunch of promises, if the first fails return the next. 
  * All promises start resolving immediately. 
  *
- * @param      {<type>}   iterable  The iterable
+ * @param      {Iterable.<Promise>}   iterable  The iterable
  * @return     {Promise}  { description_of_the_return_value }
  */
 async function firstInSeriesWithoutError(iterable) {
