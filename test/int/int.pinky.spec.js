@@ -2,15 +2,15 @@ const chai = require('chai')
 chai.use(require('chai-subset'))
 const { expect } = chai
 const {
-  outerSettle,
+  //outerSettle,
   delay,
-  waitFor,
+  //waitFor,
   map,
-  mapSeries,
-  workerAll,
-  firstInSeriesWithoutError,
-  firstWithoutError,
-  allProps,
+  //mapSeries,
+  //workerAll,
+  //firstInSeriesWithoutError,
+  //firstWithoutError,
+  //allProps,
   AggregateError,
 } = require('../../')
 

@@ -9,7 +9,7 @@
     "test:int": "mocha test/int",
     "test:coverage": "nyc _mocha test/unit test/int && nyc report -r html && nyc check-coverage",
     "test:watch": "yarn run watch 'yarn run build && mocha -b test/unit test/int || exit 1'",
-    "test:lint": "eslint pinky.js test/",
+    "test:lint": "eslint src/pinky.js test/",
     "build": "set -uex; yarn run build:doc",
     "build:doc": "set -uex; yarn run build:doc:html; yarn run build:doc:md",
     "build:doc:html": "jsdoc -c .jsdoc.json -d doc/html/ src/",
