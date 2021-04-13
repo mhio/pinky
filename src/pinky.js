@@ -6,15 +6,26 @@ function noop(){}
  * @param      {Number}           ms            - The milliseconds to delay for
  * @return     {Promise}   
  */
-async function delay(ms) {
+function delay(ms) {
   let timer
   const promise = new Promise(function(ok){
     timer = setTimeout(ok, ms)
   })
   promise.timer = timer
-  return promise 
+  return promise
 }
 
+/**
+ * delay From a timestamp for milliseconds
+ * @param      {Number}           ms            - The milliseconds to delay for
+ * @return     {Promise}   
+ */
+async function delayFrom(ts, ms) {
+  const delay_left = Date.now() - ts
+  if (delay_left > ms) return delay(ms)
+  if (delay_left > 0) return delay(delay_left)
+  return undefined
+}
 
 /**
  * map an async function across an iterable
@@ -185,6 +196,7 @@ module.exports = {
   firstInSeriesWithoutError,
   allProps,
   delay,
+  delayFrom,
   outerSettle,
   waitFor,
   AggregateError,

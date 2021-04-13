@@ -4,6 +4,7 @@ const { expect } = chai
 const {
   outerSettle,
   delay,
+  delayFrom,
   waitFor,
   map,
   mapSeries,
@@ -19,7 +20,23 @@ const delayReturnMsEntries = ([,v]) => {
 }
 
 describe('test', function(){
-
+ 
+  it('should delay', async function(){
+    const res = await delay(1)
+    expect(res).to.be.undefined
+  })
+  it('should delayFrom', async function(){
+    const res = await delayFrom(Date.now(), 10)
+    expect(res).to.be.undefined
+  })
+  it('should delayFrom the past', async function(){
+    const res = await delayFrom(Date.now()-10, 1)
+    expect(res).to.be.undefined
+  })
+  it('should delayFrom the future', async function(){
+    const res = await delayFrom(Date.now()+100000, 10)
+    expect(res).to.be.undefined
+  })
   it('should map', async function(){
     const res = await map([25,1,19,2,24], delayReturnMs)
     expect(res).to.eql([25,1,19,2,24])
