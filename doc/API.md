@@ -3,6 +3,8 @@
 <dl>
 <dt><a href="#delay">delay(ms)</a> ⇒ <code>Promise</code></dt>
 <dd><p>delay for ms</p></dd>
+<dt><a href="#delayFrom">delayFrom(ms)</a> ⇒ <code>Promise</code></dt>
+<dd><p>delay From a timestamp for milliseconds</p></dd>
 <dt><a href="#map">map(iterator, asyncFn)</a> ⇒ <code>Promise.&lt;Array&gt;</code></dt>
 <dd><p>map an async function across an iterable</p></dd>
 <dt><a href="#mapSeries">mapSeries(iterator, asyncFn)</a> ⇒ <code>Promise.&lt;Array&gt;</code></dt>
@@ -29,6 +31,20 @@ Allows you to resolve/reject the promise out of the promise scope</p></dd>
 
 ## delay(ms) ⇒ <code>Promise</code>
 <p>delay for ms</p>
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ms | <code>Number</code> | <p>The milliseconds to delay for</p> |
+
+
+* * *
+
+<a name="delayFrom"></a>
+
+## delayFrom(ms) ⇒ <code>Promise</code>
+<p>delay From a timestamp for milliseconds</p>
 
 **Kind**: global function  
 
