@@ -122,7 +122,7 @@ async function workerAll(number_of_workers, iterator_in, asyncFn){
 }
 
 /**
- * Run a bunch of promises, if the first fails return the next. 
+ * Run a bunch of promises, if the first fails return the next until all promises have been checked. 
  * All promises start resolving immediately. 
  *
  * @param      {Iterable.&lt;Promise>}   iterable  The iterable
@@ -147,8 +147,7 @@ class AggregateError extends Error {
   }
 }
 /**
- * Run a bunch of promises, if the first fails return the next. 
- * All promises start resolving immediately. 
+ * Run a bunch of promises in series, if the one fails move onto the next. 
  *
  * @param      {Iterable.&lt;Promise>}   iterable  The iterable
  * @return     {Promise}  { description_of_the_return_value }

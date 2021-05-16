@@ -15,11 +15,10 @@
 <dd><p>Use n workers to resolve a function across an iterable. (via <code>.mapSeries</code>)
 Resulting array is in worker order, then work started order, so doesn't match initial order.</p></dd>
 <dt><a href="#firstWithoutError">firstWithoutError(iterable)</a> ⇒ <code>Promise</code></dt>
-<dd><p>Run a bunch of promises, if the first fails return the next.
+<dd><p>Run a bunch of promises, if the first fails return the next until all promises have been checked.
 All promises start resolving immediately.</p></dd>
 <dt><a href="#firstInSeriesWithoutError">firstInSeriesWithoutError(iterable)</a> ⇒ <code>Promise</code></dt>
-<dd><p>Run a bunch of promises, if the first fails return the next.
-All promises start resolving immediately.</p></dd>
+<dd><p>Run a bunch of promises in series, if the one fails move onto the next.</p></dd>
 <dt><a href="#allProps">allProps(obj)</a> ⇒ <code>object</code></dt>
 <dd><p>Resolve all promises in an object</p></dd>
 <dt><a href="#outerSettle">outerSettle()</a></dt>
@@ -131,7 +130,7 @@ Resulting array is in worker order, then work started order, so doesn't match in
 <a name="firstWithoutError"></a>
 
 ## firstWithoutError(iterable) ⇒ <code>Promise</code>
-<p>Run a bunch of promises, if the first fails return the next.
+<p>Run a bunch of promises, if the first fails return the next until all promises have been checked.
 All promises start resolving immediately.</p>
 
 **Kind**: global function  
@@ -147,8 +146,7 @@ All promises start resolving immediately.</p>
 <a name="firstInSeriesWithoutError"></a>
 
 ## firstInSeriesWithoutError(iterable) ⇒ <code>Promise</code>
-<p>Run a bunch of promises, if the first fails return the next.
-All promises start resolving immediately.</p>
+<p>Run a bunch of promises in series, if the one fails move onto the next.</p>
 
 **Kind**: global function  
 **Returns**: <code>Promise</code> - <p>{ description_of_the_return_value }</p>  
