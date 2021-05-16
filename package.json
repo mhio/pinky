@@ -28,5 +28,13 @@
     "nodemon": "^2.0.6",
     "nyc": "^15.1.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "keywords": [
+    "pinky",
+    "promise",
+    "promises",
+    "async",
+    "helper",
+    "mhio"
+  ]
 }
