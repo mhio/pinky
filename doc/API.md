@@ -3,8 +3,10 @@
 <dl>
 <dt><a href="#delay">delay(ms)</a> ⇒ <code>Promise</code></dt>
 <dd><p>delay for ms</p></dd>
-<dt><a href="#delayFrom">delayFrom(ms)</a> ⇒ <code>Promise</code></dt>
-<dd><p>delay From a timestamp for milliseconds</p></dd>
+<dt><a href="#delayFrom">delayFrom(ts, ms)</a> ⇒ <code>Promise</code></dt>
+<dd><p>Delay from a timestamp for milliseconds</p></dd>
+<dt><a href="#delayTo">delayTo(ts)</a> ⇒ <code>Promise</code></dt>
+<dd><p>Delay until a timestamp milliseconds</p></dd>
 <dt><a href="#map">map(iterator, asyncFn)</a> ⇒ <code>Promise.&lt;Array&gt;</code></dt>
 <dd><p>map an async function across an iterable</p></dd>
 <dt><a href="#mapSeries">mapSeries(iterator, asyncFn)</a> ⇒ <code>Promise.&lt;Array&gt;</code></dt>
@@ -43,14 +45,29 @@ Allows you to resolve/reject the promise out of the promise scope</p></dd>
 
 <a name="delayFrom"></a>
 
-## delayFrom(ms) ⇒ <code>Promise</code>
-<p>delay From a timestamp for milliseconds</p>
+## delayFrom(ts, ms) ⇒ <code>Promise</code>
+<p>Delay from a timestamp for milliseconds</p>
 
 **Kind**: global function  
 
 | Param | Type | Description |
 | --- | --- | --- |
+| ts | <code>Number</code> | <p>The millisecond <code>Date</code> timestamp to start the delay from</p> |
 | ms | <code>Number</code> | <p>The milliseconds to delay for</p> |
+
+
+* * *
+
+<a name="delayTo"></a>
+
+## delayTo(ts) ⇒ <code>Promise</code>
+<p>Delay until a timestamp milliseconds</p>
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ts | <code>Number</code> | <p>The millisecond <code>Date</code> timestamp to start the delay from</p> |
 
 
 * * *

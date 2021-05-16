@@ -44,13 +44,25 @@ function delay(ms) {
 }
 
 /**
- * delay From a timestamp for milliseconds
+ * Delay from a timestamp for milliseconds
+ * @param      {Number}           ts            - The millisecond `Date` timestamp to start the delay from
  * @param      {Number}           ms            - The milliseconds to delay for
  * @return     {Promise}   
  */
 async function delayFrom(ts, ms) {
   const delay_left = Date.now() - ts
   if (delay_left > ms) return delay(ms)
+  if (delay_left > 0) return delay(delay_left)
+  return undefined
+}
+
+/**
+ * Delay until a timestamp milliseconds
+ * @param      {Number}           ts            - The millisecond `Date` timestamp to start the delay from
+ * @return     {Promise}   
+ */
+async function delayTo(ts) {
+  const delay_left = Date.now() - ts
   if (delay_left > 0) return delay(delay_left)
   return undefined
 }
@@ -225,6 +237,7 @@ module.exports = {
   allProps,
   delay,
   delayFrom,
+  delayTo,
   outerSettle,
   waitFor,
   AggregateError,
@@ -239,7 +252,7 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#allProps">allProps</a></li><li><a href="global.html#delay">delay</a></li><li><a href="global.html#delayFrom">delayFrom</a></li><li><a href="global.html#firstInSeriesWithoutError">firstInSeriesWithoutError</a></li><li><a href="global.html#firstWithoutError">firstWithoutError</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#mapSeries">mapSeries</a></li><li><a href="global.html#outerSettle">outerSettle</a></li><li><a href="global.html#waitFor">waitFor</a></li><li><a href="global.html#workerAll">workerAll</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#allProps">allProps</a></li><li><a href="global.html#delay">delay</a></li><li><a href="global.html#delayFrom">delayFrom</a></li><li><a href="global.html#delayTo">delayTo</a></li><li><a href="global.html#firstInSeriesWithoutError">firstInSeriesWithoutError</a></li><li><a href="global.html#firstWithoutError">firstWithoutError</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#mapSeries">mapSeries</a></li><li><a href="global.html#outerSettle">outerSettle</a></li><li><a href="global.html#waitFor">waitFor</a></li><li><a href="global.html#workerAll">workerAll</a></li></ul>
 </nav>
 
 <br class="clear">
