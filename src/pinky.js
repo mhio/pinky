@@ -174,7 +174,7 @@ function outerSettle(){
 }
 
 /**
- * Wait unit a timestamp for some condition function to become truthey. Can be an async or standard function  
+ * Wait until a timestamp for some condition function to become truthey. Can be an async or standard function  
  * @param   {number}    timeout_ms       - The `Date` timestamp to wait until
  * @param   {function}  condition_fn     - The test function to call repeatedly
  * @param   {object}    options          - Options
