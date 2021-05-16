@@ -159,10 +159,12 @@ async function allProps(obj){
 
 
 /**
- * Create a promise and return the promise,resolve and reject
- * Allows you to resolve/reject the promise out of the promise scope
+ * Create a promise and return the promise, resolve and reject
+ * Allows you to choose whether to resolve/reject something outside the promise scope
+ * @returns {Array} - [ promise, resolve, reject ]
  */
 function outerSettle(){
+  // can't find/remember the use case, seems Promise.resolve/reject would do this, unless a function in passed in
   let outerResolve
   let outerReject
   const promise = new Promise(function (resolve, reject) {
