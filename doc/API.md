@@ -26,7 +26,7 @@ All promises start resolving immediately.</p></dd>
 <dd><p>Create a promise and return the promise,resolve and reject
 Allows you to resolve/reject the promise out of the promise scope</p></dd>
 <dt><a href="#waitFor">waitFor(timeout_ms, condition_fn, options)</a> ⇒ <code>object</code></dt>
-<dd><p>Wait unit a timestamp for some condition function to become truthey. Can be an async or standard function</p></dd>
+<dd><p>Wait until a timestamp for some condition function to become truthey. Can be an async or standard function</p></dd>
 </dl>
 
 <a name="delay"></a>
@@ -188,7 +188,7 @@ Allows you to resolve/reject the promise out of the promise scope</p>
 <a name="waitFor"></a>
 
 ## waitFor(timeout_ms, condition_fn, options) ⇒ <code>object</code>
-<p>Wait unit a timestamp for some condition function to become truthey. Can be an async or standard function</p>
+<p>Wait until a timestamp for some condition function to become truthey. Can be an async or standard function</p>
 
 **Kind**: global function  
 **Throws**:
