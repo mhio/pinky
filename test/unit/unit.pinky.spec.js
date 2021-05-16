@@ -5,6 +5,7 @@ const {
   outerSettle,
   delay,
   delayFrom,
+  delayTo,
   waitFor,
   map,
   mapSeries,
@@ -35,6 +36,14 @@ describe('test', function(){
   })
   it('should delayFrom the future', async function(){
     const res = await delayFrom(Date.now()+100000, 10)
+    expect(res).to.be.undefined
+  })
+  it('should delayTo', async function(){
+    const res = await delayTo(Date.now()+10)
+    expect(res).to.be.undefined
+  })
+  it('should delayTo the past ok', async function(){
+    const res = await delayTo(Date.now()-10)
     expect(res).to.be.undefined
   })
   it('should map', async function(){

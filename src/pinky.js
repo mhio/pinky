@@ -16,13 +16,25 @@ function delay(ms) {
 }
 
 /**
- * delay From a timestamp for milliseconds
+ * Delay from a timestamp for milliseconds
+ * @param      {Number}           ts            - The millisecond `Date` timestamp to start the delay from
  * @param      {Number}           ms            - The milliseconds to delay for
  * @return     {Promise}   
  */
 async function delayFrom(ts, ms) {
   const delay_left = Date.now() - ts
   if (delay_left > ms) return delay(ms)
+  if (delay_left > 0) return delay(delay_left)
+  return undefined
+}
+
+/**
+ * Delay until a timestamp milliseconds
+ * @param      {Number}           ts            - The millisecond `Date` timestamp to start the delay from
+ * @return     {Promise}   
+ */
+async function delayTo(ts) {
+  const delay_left = Date.now() - ts
   if (delay_left > 0) return delay(delay_left)
   return undefined
 }
@@ -197,6 +209,7 @@ module.exports = {
   allProps,
   delay,
   delayFrom,
+  delayTo,
   outerSettle,
   waitFor,
   AggregateError,
