@@ -174,22 +174,26 @@ function outerSettle(){
 }
 
 /**
- * Wait for some condition function to become true. Can be an async function  
- *
+ * Wait unit a timestamp for some condition function to become truthey. Can be an async or standard function  
+ * @param   {number}    timeout_ms       - The `Date` timestamp to wait until
+ * @param   {function}  condition_fn     - The test function to call repeatedly
+ * @param   {object}    options          - Options
+ * @param   {number}    options.wait_ms  - Wait between tests (1000)
+ * @param   {string}    options.label    - Label to attach to thrown Error
+ * @returns {object}
+ * @throws  {Error}
  */
 async function waitFor (timeout_ms, condition_fn, { wait_ms = 1000, label = 'condition' /*backoff = 'linear'*/ } = {}) {
   let count = 0
   const start = Date.now()
   const timeout = start + timeout_ms
   while ( timeout > Date.now() ) {
-    let condition_res = condition_fn()
-    if (condition_res && condition_res.then && condition_res.catch) {
-      condition_res = await condition_res
-    }
-    if (condition_res) return { total_ms: Date.now() - start, count }
+    const condition_res = await Promise.resolve(condition_fn())
+    if (condition_res) return { total_ms: Date.now() - start, count, result: condition_res }
     await delay(wait_ms + (count * wait_ms))
     count++
   }
+  // Maybe allow `Error` to be user supplied constructor
   const err = new Error(`Timeout waiting for ${label}`)
   err.details = {
     wait_ms, label, timeout_ms, condition_fn,

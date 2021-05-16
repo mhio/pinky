@@ -1528,7 +1528,7 @@ Allows you to resolve/reject the promise out of the promise scope</p>
     
 
     
-    <h4 class="name" id="waitFor"><span class="type-signature">(async) </span>waitFor<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="waitFor"><span class="type-signature">(async) </span>waitFor<span class="signature">(timeout_ms, condition_fn, options)</span><span class="type-signature"> &rarr; {object}</span></h4>
     
 
     
@@ -1536,7 +1536,7 @@ Allows you to resolve/reject the promise out of the promise scope</p>
 
 
 <div class="description">
-    <p>Wait for some condition function to become true. Can be an async function</p>
+    <p>Wait unit a timestamp for some condition function to become truthey. Can be an async or standard function</p>
 </div>
 
 
@@ -1545,6 +1545,173 @@ Allows you to resolve/reject the promise out of the promise scope</p>
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>timeout_ms</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The <code>Date</code> timestamp to wait until</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>condition_fn</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The test function to call repeatedly</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Options</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>wait_ms</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Wait between tests (1000)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>label</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Label to attach to thrown Error</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -1580,7 +1747,7 @@ Allows you to resolve/reject the promise out of the promise scope</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line180">line 180</a>
+        <a href="pinky.js.html">pinky.js</a>, <a href="pinky.js.html#line186">line 186</a>
     </li></ul></dd>
     
 
@@ -1603,8 +1770,41 @@ Allows you to resolve/reject the promise out of the promise scope</p>
 
 
 
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc">
+    
+        
+<span class="param-type">Error</span>
 
 
+    
+    </div>
+
+
+    
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">object</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 

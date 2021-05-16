@@ -25,8 +25,8 @@ All promises start resolving immediately.</p></dd>
 <dt><a href="#outerSettle">outerSettle()</a></dt>
 <dd><p>Create a promise and return the promise,resolve and reject
 Allows you to resolve/reject the promise out of the promise scope</p></dd>
-<dt><a href="#waitFor">waitFor()</a></dt>
-<dd><p>Wait for some condition function to become true. Can be an async function</p></dd>
+<dt><a href="#waitFor">waitFor(timeout_ms, condition_fn, options)</a> ⇒ <code>object</code></dt>
+<dd><p>Wait unit a timestamp for some condition function to become truthey. Can be an async or standard function</p></dd>
 </dl>
 
 <a name="delay"></a>
@@ -187,10 +187,23 @@ Allows you to resolve/reject the promise out of the promise scope</p>
 
 <a name="waitFor"></a>
 
-## waitFor()
-<p>Wait for some condition function to become true. Can be an async function</p>
+## waitFor(timeout_ms, condition_fn, options) ⇒ <code>object</code>
+<p>Wait unit a timestamp for some condition function to become truthey. Can be an async or standard function</p>
 
 **Kind**: global function  
+**Throws**:
+
+- <code>Error</code> 
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| timeout_ms | <code>number</code> | <p>The <code>Date</code> timestamp to wait until</p> |
+| condition_fn | <code>function</code> | <p>The test function to call repeatedly</p> |
+| options | <code>object</code> | <p>Options</p> |
+| options.wait_ms | <code>number</code> | <p>Wait between tests (1000)</p> |
+| options.label | <code>string</code> | <p>Label to attach to thrown Error</p> |
+
 
 * * *
 
