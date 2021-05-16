@@ -21,7 +21,7 @@ map an async function across an iterable
 `mapSeries(iterator, asyncFn) ⇒ Promise.<Array>`
 map an async function in series across an iterable
 
-`workerAll(number_of_workers, iterator_in, asyncFn) ⇒ Promise.<Array>
+`workerAll(number_of_workers, iterator_in, asyncFn) ⇒ Promise.<Array>`
 Use n workers to resolve a function across an iterable. (via .mapSeries) Resulting array is in worker order, then work started order, so doesn't match initial order.
 
 `firstWithoutError(iterable) ⇒ Promise`
