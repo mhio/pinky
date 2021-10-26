@@ -55,6 +55,7 @@ async function map(iterator, asyncFn){
   return await Promise.all(results)
 }
 
+/*
 function* mapP(iterable, fn) {
     let i = 0
     for (const item of iterable)
@@ -66,6 +67,8 @@ function* filterP(iterable, fn) {
       if (fn(item, i++, iterable))
         yield item;
 }
+
+*/
 
 /**
  * map an async function in series across an iterable
