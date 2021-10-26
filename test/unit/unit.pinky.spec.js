@@ -9,6 +9,7 @@ const {
   waitFor,
   map,
   mapSeries,
+  mapWorkers,
   workerAll,
   firstInSeriesWithoutError,
   firstWithoutError,
@@ -56,12 +57,40 @@ describe('test', function(){
     expect(res).to.eql([30,15,1])
   })
 
-  it('should worker workers', async function(){
+  it('should mapWorkers 1 array', async function(){
+    const res = await mapWorkers([30,15,1,29,2], 1, delayReturnMs)
+    expect(res).to.eql([30,15,1,29,2])
+  })
+
+  it('should mapWorkers 2 array', async function(){
+    const res = await mapWorkers([30,15,1,29,2], 2, delayReturnMs)
+    expect(res).to.eql([30,15,1,29,2])
+  })
+  it('should mapWorkers 3 array', async function(){
+    const res = await mapWorkers([30,15,1,29,2], 3, delayReturnMs)
+    expect(res).to.eql([30,15,1,29,2])
+  })
+
+  it('should mapWorkers 1 iterator', async function(){
+    const res = await mapWorkers(new Set([30,15,1,29,2]), 1, delayReturnMs)
+    expect(res).to.eql([30,15,1,29,2])
+  })
+
+  it('should mapWorkers 2 iterator', async function(){
+    const res = await mapWorkers(new Set([30,15,1,29,2]), 2, delayReturnMs)
+    expect(res).to.eql([30,15,1,29,2])
+  })
+  it('should mapWorkers 3 iterator', async function(){
+    const res = await mapWorkers(new Set([30,15,1,29,2]), 3, delayReturnMs)
+    expect(res).to.eql([30,15,1,29,2])
+  })
+
+  it('should worker workers 2', async function(){
     const res = await workerAll(2, [25,20,5,1,35].entries(), delayReturnMsEntries)
     expect(res).to.containSubset([25,20,5,1,35])
   })
 
-  it('should worker workers', async function(){
+  it('should worker workers 3', async function(){
     const res = await workerAll(3, [10,10,10,1,2,3].entries(), delayReturnMsEntries)
     expect(res).to.containSubset([10,10,10,1,2,3])
   })

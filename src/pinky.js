@@ -1,4 +1,5 @@
 
+const pMap = require('p-map')
 function noop(){}
 
 /**
@@ -54,6 +55,18 @@ async function map(iterator, asyncFn){
   return await Promise.all(results)
 }
 
+function* mapP(iterable, fn) {
+    let i = 0
+    for (const item of iterable)
+      yield fn(item, i++, iterable);
+}
+function* filterP(iterable, fn) {
+    let i = 0
+    for (const item of iterable)
+      if (fn(item, i++, iterable))
+        yield item;
+}
+
 /**
  * map an async function in series across an iterable
  *
@@ -67,6 +80,17 @@ async function mapSeries(iterator, asyncFn){
     results.push(await asyncFn(i))
   }
   return results
+}
+
+/**
+ * map an async function in across an iterable with N workers in parallel (if node permits)
+ *
+ * @param      {Iterable.<Any>}    iterator     - The iterator
+ * @param      {Function}          asyncFn      - The asynchronous function
+ * @return     {Promise.<Array>}                - Array of all resolved values
+ */
+async function mapWorkers(iterable, worker_count, asyncFn){
+  return pMap(iterable, asyncFn, { concurrency: worker_count })
 }
 
 /**
@@ -119,6 +143,7 @@ class AggregateError extends Error {
     this.errors = errors
   }
 }
+
 /**
  * Run a bunch of promises in series, if the one fails move onto the next. 
  *
@@ -209,6 +234,7 @@ module.exports = {
   noop,
   map,
   mapSeries,
+  mapWorkers,
   workerAll,
   firstWithoutError,
   firstInSeriesWithoutError,

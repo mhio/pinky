@@ -1,6 +1,6 @@
 {
   "name": "@mhio/pinky",
-  "version": "0.4.2",
+  "version": "0.5.0-0",
   "main": "src/pinky.js",
   "license": "MIT",
   "scripts": {
@@ -28,7 +28,9 @@
     "nodemon": "^2.0.6",
     "nyc": "^15.1.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "p-map": "4.0.0"
+  },
   "keywords": [
     "pinky",
     "promise",
