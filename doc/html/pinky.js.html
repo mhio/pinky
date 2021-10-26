@@ -27,6 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>
+const pMap = require('p-map')
 function noop(){}
 
 /**
@@ -82,6 +83,21 @@ async function map(iterator, asyncFn){
   return await Promise.all(results)
 }
 
+/*
+function* mapP(iterable, fn) {
+    let i = 0
+    for (const item of iterable)
+      yield fn(item, i++, iterable);
+}
+function* filterP(iterable, fn) {
+    let i = 0
+    for (const item of iterable)
+      if (fn(item, i++, iterable))
+        yield item;
+}
+
+*/
+
 /**
  * map an async function in series across an iterable
  *
@@ -98,8 +114,20 @@ async function mapSeries(iterator, asyncFn){
 }
 
 /**
+ * map an async function in across an iterable with N workers in parallel (if node permits)
+ *
+ * @param      {Iterable.&lt;Any>}    iterator     - The iterator
+ * @param      {Function}          asyncFn      - The asynchronous function
+ * @return     {Promise.&lt;Array>}                - Array of all resolved values
+ */
+async function mapWorkers(iterable, worker_count, asyncFn){
+  return pMap(iterable, asyncFn, { concurrency: worker_count })
+}
+
+/**
  * Use n workers to resolve a function across an iterable. (via `.mapSeries`)
- * Resulting array is in worker order, then work started order, so doesn't match initial order.
+ * Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
+ * if you need to inspect results include some type of id in the return.
  *
  * @param      {number}    number_of_workers    - Number of functions to execute
  * @param      {Iterable.&lt;Any>}    iterator_in          - The iterator of values to use
@@ -146,6 +174,7 @@ class AggregateError extends Error {
     this.errors = errors
   }
 }
+
 /**
  * Run a bunch of promises in series, if the one fails move onto the next. 
  *
@@ -186,10 +215,12 @@ async function allProps(obj){
 
 
 /**
- * Create a promise and return the promise,resolve and reject
- * Allows you to resolve/reject the promise out of the promise scope
+ * Create a promise and return the promise, resolve and reject
+ * Allows you to choose whether to resolve/reject something outside the promise scope
+ * @returns {Array} - [ promise, resolve, reject ]
  */
 function outerSettle(){
+  // can't find/remember the use case, seems Promise.resolve/reject would do this, unless a function in passed in
   let outerResolve
   let outerReject
   const promise = new Promise(function (resolve, reject) {
@@ -234,6 +265,7 @@ module.exports = {
   noop,
   map,
   mapSeries,
+  mapWorkers,
   workerAll,
   firstWithoutError,
   firstInSeriesWithoutError,
@@ -255,7 +287,7 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#allProps">allProps</a></li><li><a href="global.html#delay">delay</a></li><li><a href="global.html#delayFrom">delayFrom</a></li><li><a href="global.html#delayTo">delayTo</a></li><li><a href="global.html#firstInSeriesWithoutError">firstInSeriesWithoutError</a></li><li><a href="global.html#firstWithoutError">firstWithoutError</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#mapSeries">mapSeries</a></li><li><a href="global.html#outerSettle">outerSettle</a></li><li><a href="global.html#waitFor">waitFor</a></li><li><a href="global.html#workerAll">workerAll</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#allProps">allProps</a></li><li><a href="global.html#delay">delay</a></li><li><a href="global.html#delayFrom">delayFrom</a></li><li><a href="global.html#delayTo">delayTo</a></li><li><a href="global.html#firstInSeriesWithoutError">firstInSeriesWithoutError</a></li><li><a href="global.html#firstWithoutError">firstWithoutError</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#mapSeries">mapSeries</a></li><li><a href="global.html#mapWorkers">mapWorkers</a></li><li><a href="global.html#outerSettle">outerSettle</a></li><li><a href="global.html#waitFor">waitFor</a></li><li><a href="global.html#workerAll">workerAll</a></li></ul>
 </nav>
 
 <br class="clear">

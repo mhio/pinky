@@ -11,9 +11,12 @@
 <dd><p>map an async function across an iterable</p></dd>
 <dt><a href="#mapSeries">mapSeries(iterator, asyncFn)</a> ⇒ <code>Promise.&lt;Array&gt;</code></dt>
 <dd><p>map an async function in series across an iterable</p></dd>
+<dt><a href="#mapWorkers">mapWorkers(iterator, asyncFn)</a> ⇒ <code>Promise.&lt;Array&gt;</code></dt>
+<dd><p>map an async function in across an iterable with N workers in parallel (if node permits)</p></dd>
 <dt><a href="#workerAll">workerAll(number_of_workers, iterator_in, asyncFn)</a> ⇒ <code>Promise.&lt;Array&gt;</code></dt>
 <dd><p>Use n workers to resolve a function across an iterable. (via <code>.mapSeries</code>)
-Resulting array is in worker order, then work started order, so doesn't match initial order.</p></dd>
+Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
+if you need to inspect results include some type of id in the return.</p></dd>
 <dt><a href="#firstWithoutError">firstWithoutError(iterable)</a> ⇒ <code>Promise</code></dt>
 <dd><p>Run a bunch of promises, if the first fails return the next until all promises have been checked.
 All promises start resolving immediately.</p></dd>
@@ -21,9 +24,9 @@ All promises start resolving immediately.</p></dd>
 <dd><p>Run a bunch of promises in series, if the one fails move onto the next.</p></dd>
 <dt><a href="#allProps">allProps(obj)</a> ⇒ <code>object</code></dt>
 <dd><p>Resolve all promises in an object</p></dd>
-<dt><a href="#outerSettle">outerSettle()</a></dt>
-<dd><p>Create a promise and return the promise,resolve and reject
-Allows you to resolve/reject the promise out of the promise scope</p></dd>
+<dt><a href="#outerSettle">outerSettle()</a> ⇒ <code>Array</code></dt>
+<dd><p>Create a promise and return the promise, resolve and reject
+Allows you to choose whether to resolve/reject something outside the promise scope</p></dd>
 <dt><a href="#waitFor">waitFor(timeout_ms, condition_fn, options)</a> ⇒ <code>object</code></dt>
 <dd><p>Wait until a timestamp for some condition function to become truthey. Can be an async or standard function</p></dd>
 </dl>
@@ -107,11 +110,30 @@ Allows you to resolve/reject the promise out of the promise scope</p></dd>
 
 * * *
 
+<a name="mapWorkers"></a>
+
+## mapWorkers(iterator, asyncFn) ⇒ <code>Promise.&lt;Array&gt;</code>
+<p>map an async function in across an iterable with N workers in parallel (if node permits)</p>
+
+**Kind**: global function  
+**Returns**: <code>Promise.&lt;Array&gt;</code> - <ul>
+<li>Array of all resolved values</li>
+</ul>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| iterator | <code>Iterable.&lt;Any&gt;</code> | <p>The iterator</p> |
+| asyncFn | <code>function</code> | <p>The asynchronous function</p> |
+
+
+* * *
+
 <a name="workerAll"></a>
 
 ## workerAll(number_of_workers, iterator_in, asyncFn) ⇒ <code>Promise.&lt;Array&gt;</code>
 <p>Use n workers to resolve a function across an iterable. (via <code>.mapSeries</code>)
-Resulting array is in worker order, then work started order, so doesn't match initial order.</p>
+Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
+if you need to inspect results include some type of id in the return.</p>
 
 **Kind**: global function  
 **Returns**: <code>Promise.&lt;Array&gt;</code> - <ul>
@@ -175,11 +197,14 @@ All promises start resolving immediately.</p>
 
 <a name="outerSettle"></a>
 
-## outerSettle()
-<p>Create a promise and return the promise,resolve and reject
-Allows you to resolve/reject the promise out of the promise scope</p>
+## outerSettle() ⇒ <code>Array</code>
+<p>Create a promise and return the promise, resolve and reject
+Allows you to choose whether to resolve/reject something outside the promise scope</p>
 
 **Kind**: global function  
+**Returns**: <code>Array</code> - <ul>
+<li>[ promise, resolve, reject ]</li>
+</ul>  
 
 * * *
 
