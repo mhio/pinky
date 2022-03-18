@@ -546,3 +546,4 @@ function waitFor(timeout_ms, condition_fn, _a) {
     });
 }
 exports.waitFor = waitFor;
+//# sourceMappingURL=pinky.js.map
