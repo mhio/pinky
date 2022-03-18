@@ -9,12 +9,12 @@ const {
   waitFor,
   map,
   mapSeries,
-  mapWorkers,
+  mapConcurrent,
   workerAll,
   firstInSeriesWithoutError,
   firstWithoutError,
   allProps
-} = require('../../src/pinky')
+} = require('../../dist/pinky')
 const delayReturnMs = (v) => delay(v).then(() => v)
 const delayReturnMsEntries = ([,v]) => {
   if (v === false) throw new Error('false')
@@ -57,31 +57,31 @@ describe('test', function(){
     expect(res).to.eql([30,15,1])
   })
 
-  it('should mapWorkers 1 array', async function(){
-    const res = await mapWorkers([30,15,1,29,2], 1, delayReturnMs)
+  it('should mapConcurrent 1 array', async function(){
+    const res = await mapConcurrent([30,15,1,29,2], delayReturnMs, 1)
     expect(res).to.eql([30,15,1,29,2])
   })
 
-  it('should mapWorkers 2 array', async function(){
-    const res = await mapWorkers([30,15,1,29,2], 2, delayReturnMs)
+  it('should mapConcurrent 2 array', async function(){
+    const res = await mapConcurrent([30,15,1,29,2], delayReturnMs, 2)
     expect(res).to.eql([30,15,1,29,2])
   })
-  it('should mapWorkers 3 array', async function(){
-    const res = await mapWorkers([30,15,1,29,2], 3, delayReturnMs)
-    expect(res).to.eql([30,15,1,29,2])
-  })
-
-  it('should mapWorkers 1 iterator', async function(){
-    const res = await mapWorkers(new Set([30,15,1,29,2]), 1, delayReturnMs)
+  it('should mapConcurrent 3 array', async function(){
+    const res = await mapConcurrent([30,15,1,29,2], delayReturnMs, 3)
     expect(res).to.eql([30,15,1,29,2])
   })
 
-  it('should mapWorkers 2 iterator', async function(){
-    const res = await mapWorkers(new Set([30,15,1,29,2]), 2, delayReturnMs)
+  it('should mapConcurrent 1 iterator', async function(){
+    const res = await mapConcurrent(new Set([30,15,1,29,2]), delayReturnMs, 1)
     expect(res).to.eql([30,15,1,29,2])
   })
-  it('should mapWorkers 3 iterator', async function(){
-    const res = await mapWorkers(new Set([30,15,1,29,2]), 3, delayReturnMs)
+
+  it('should mapConcurrent 2 iterator', async function(){
+    const res = await mapConcurrent(new Set([30,15,1,29,2]), delayReturnMs, 2)
+    expect(res).to.eql([30,15,1,29,2])
+  })
+  it('should mapConcurrent 3 iterator', async function(){
+    const res = await mapConcurrent(new Set([30,15,1,29,2]), delayReturnMs, 3)
     expect(res).to.eql([30,15,1,29,2])
   })
 
@@ -126,7 +126,7 @@ describe('test', function(){
       await firstInSeriesWithoutError([Promise.reject('no'),Promise.reject('nope')])
       expect.fail('Should have thrown')
     } catch (err) {
-      expect(err.message).to.equal('Multiple errors')
+      expect(err.message).to.equal('Series Errors')
       expect(err.errors).to.be.an('array')
       expect(err.errors).to.have.lengthOf(2)
     }

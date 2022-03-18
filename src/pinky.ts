@@ -1,6 +1,4 @@
-
-import pMap from 'p-map'
-function noop(...args: any[]) : any {}
+export function noop(...args: any[]) : any {}
 
 /**
  * delay for ms
@@ -52,19 +50,18 @@ export async function delayFrom(ts: number, ms: number) : Promise<void> {
  * @return     {Promise}   
  */
 export async function delayTo(ts: number) : Promise<void> {
-  const delay_left = Date.now() - ts
-  if (delay_left > 0) return delay(delay_left)
+  const delay_left = ts - Date.now()
+  if (delay_left > 1) return delay(delay_left)
 }
 
 /**
  * map an async function across an iterable
- *
- * @param      {Iterable.<Any>}   iterator      - The iterator
- * @param      {Function}         asyncFn       - The asynchronous function
- * @return     {Promise.<Array>}                - Array of all resolved promise values
+ * @param iterator 
+ * @param asyncFn 
+ * @returns Array of resolved promises
  */
-async function map(iterator: Iterable<any>, asyncFn: Function) : Promise<any[]> {
-  const results = []
+export async function map(iterator: Iterable<any>, asyncFn: Function) : Promise<any[]> {
+  const results: Promise<any>[] = []
   for (const i of iterator) {
     results.push(asyncFn(i))
   }
@@ -102,17 +99,37 @@ export async function mapSeries(iterable: Iterable<any>, asyncFn: Function) : Pr
 }
 
 /**
- * map an async function in across an iterable with N workers in parallel (if node permits)
+ * map an async function across an iterable with up to N promises
  *
  * @param      {Iterable.<Any>}    iterator     - The iterator
  * @param      {Function}          asyncFn      - The asynchronous function
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
 
-export type MapperFunction = (element: any, index: any) => any;
+export type MapperFunction = (element: any, index?: any) => any;
 
-export async function mapWorkers(iterable: Iterable<any>, worker_count: number, asyncFn: MapperFunction) : Promise<any[]> {
-  return pMap(iterable, asyncFn, { concurrency: worker_count })
+export async function mapConcurrent(iterator_in: Iterable<any>, asyncFn: MapperFunction, worker_count: number) : Promise<any[]>{
+  const results: any[] = []
+  const running: any[] = []
+  let count = 0
+  for (const item of iterator_in) {
+    const p = asyncFn(item, count)
+    results.push(p)
+    running.push(p)
+
+    if (running.length > worker_count) {
+      // await Promise.race(running)
+      const j: number = await new Promise((resolve) => {
+        for (let i = 0; i < running.length; i++) {
+          const j = i
+          running[j].then(()=> resolve(j), ()=>resolve(j))
+        }
+      })
+      running.splice(j, 1)
+    }
+    count++
+  }
+  return Promise.all(results);
 }
 
 /**
@@ -159,10 +176,10 @@ export async function firstWithoutError(iterable: Iterable<Promise<any>>) {
 }
 
 export class DetailsError extends Error {
-  detail: any
+  details: any
   constructor(message: string, details: any){
     super(message)
-    this.detail = details
+    this.details = details
   }
 }
 export class AggregateError extends Error {
@@ -188,7 +205,7 @@ export async function firstInSeriesWithoutError(iterable: Iterable<Promise<any>>
       errors.push(error)
     }
   }
-  throw new AggregateError('Series errors', errors)
+  throw new AggregateError('Series Errors', errors)
 }
 
 
@@ -239,7 +256,12 @@ export function outerSettle(){
  * @returns {object}
  * @throws  {Error}
  */
-export async function waitFor (timeout_ms: number, condition_fn: Function, { wait_ms = 1000, label = 'condition' /*backoff = 'linear'*/ } = {}) {
+export async function waitFor (
+  timeout_ms: number,
+  condition_fn: Function,
+  { wait_ms = 1000, label = 'condition' /*backoff = 'linear'*/ } = {}
+)
+{
   let count = 0
   const start = Date.now()
   const timeout = start + timeout_ms
