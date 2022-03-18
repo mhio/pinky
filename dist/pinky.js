@@ -63,11 +63,9 @@ var __values = (this && this.__values) || function(o) {
 };
 exports.__esModule = true;
 exports.waitFor = exports.outerSettle = exports.allProps = exports.firstInSeriesWithoutError = exports.AggregateError = exports.DetailsError = exports.firstWithoutError = exports.workerAll = exports.mapConcurrent = exports.mapSeries = exports.map = exports.delayTo = exports.delayFrom = exports.delay = exports.noop = void 0;
+//export function noop(...args: any[]) : any {
 function noop() {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
+    // do nothing.
 }
 exports.noop = noop;
 /**
@@ -148,14 +146,16 @@ exports.delayTo = delayTo;
  */
 function map(iterator, asyncFn) {
     return __awaiter(this, void 0, void 0, function () {
-        var results, iterator_1, iterator_1_1, i;
+        var results, i, iterator_1, iterator_1_1, e;
         var e_1, _a;
         return __generator(this, function (_b) {
             results = [];
+            i = 0;
             try {
                 for (iterator_1 = __values(iterator), iterator_1_1 = iterator_1.next(); !iterator_1_1.done; iterator_1_1 = iterator_1.next()) {
-                    i = iterator_1_1.value;
-                    results.push(asyncFn(i));
+                    e = iterator_1_1.value;
+                    results.push(asyncFn(e, i));
+                    i++;
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -193,12 +193,13 @@ function* filterP(iterable, fn) {
  */
 function mapSeries(iterable, asyncFn) {
     return __awaiter(this, void 0, void 0, function () {
-        var results, iterable_1, iterable_1_1, ent, _a, _b, e_2_1;
+        var results, i, iterable_1, iterable_1_1, e, _a, _b, e_2_1;
         var e_2, _c;
         return __generator(this, function (_d) {
             switch (_d.label) {
                 case 0:
                     results = [];
+                    i = 0;
                     _d.label = 1;
                 case 1:
                     _d.trys.push([1, 6, 7, 8]);
@@ -206,11 +207,12 @@ function mapSeries(iterable, asyncFn) {
                     _d.label = 2;
                 case 2:
                     if (!!iterable_1_1.done) return [3 /*break*/, 5];
-                    ent = iterable_1_1.value;
+                    e = iterable_1_1.value;
                     _b = (_a = results).push;
-                    return [4 /*yield*/, asyncFn(ent)];
+                    return [4 /*yield*/, asyncFn(e, i)];
                 case 3:
                     _b.apply(_a, [_d.sent()]);
+                    i++;
                     _d.label = 4;
                 case 4:
                     iterable_1_1 = iterable_1.next();
@@ -232,6 +234,13 @@ function mapSeries(iterable, asyncFn) {
     });
 }
 exports.mapSeries = mapSeries;
+/**
+ * map an async function across an iterable with up to N promises
+ *
+ * @param      {Iterable.<Any>}    iterator     - The iterator
+ * @param      {Function}          asyncFn      - The asynchronous function
+ * @return     {Promise.<Array>}                - Array of all resolved values
+ */
 function mapConcurrent(iterator_in, asyncFn, worker_count) {
     return __awaiter(this, void 0, void 0, function () {
         var results, running, count, iterator_in_1, iterator_in_1_1, item, p, j, e_3_1;
@@ -354,7 +363,7 @@ function firstWithoutError(iterable) {
                     thenable = iterable_2_1.value;
                     promise = Promise.resolve(thenable);
                     promises.push(promise);
-                    promise["catch"](function () { }); // ignore rejections for now
+                    promise["catch"](noop); // ignore rejections for now
                 }
             }
             catch (e_5_1) { e_5 = { error: e_5_1 }; }
@@ -455,7 +464,7 @@ function allProps(obj) {
                     for (key in obj) {
                         promise = Promise.resolve(obj[key]);
                         promises[key] = promise;
-                        promise["catch"](function () { }); // ignore rejections for now
+                        promise["catch"](noop); // ignore rejections for now
                     }
                     results = {};
                     _a = [];
@@ -499,7 +508,7 @@ function outerSettle() {
 }
 exports.outerSettle = outerSettle;
 /**
- * Wait until a timestamp for some condition function to become truthey. Can be an async or standard function
+ * Wait until a timestamp or some condition function to become truthey. Can be an async or standard function
  * @param   {number}    timeout_ms       - The `Date` timestamp to wait until
  * @param   {function}  condition_fn     - The test function to call repeatedly
  * @param   {object}    options          - Options

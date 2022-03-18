@@ -1,4 +1,6 @@
-export declare function noop(...args: any[]): any;
+export declare type MapperFunction = (element: any, index?: any) => any;
+export declare type BoolOrPromiseBoolFunction = () => boolean | Promise<boolean>;
+export declare function noop(): void;
 /**
  * delay for ms
  * @param      {Number}           ms            - The milliseconds to delay for
@@ -29,7 +31,7 @@ export declare function delayTo(ts: number): Promise<void>;
  * @param asyncFn
  * @returns Array of resolved promises
  */
-export declare function map(iterator: Iterable<any>, asyncFn: Function): Promise<any[]>;
+export declare function map(iterator: Iterable<any>, asyncFn: MapperFunction): Promise<any[]>;
 /**
  * map an async function in series across an iterable
  *
@@ -37,7 +39,7 @@ export declare function map(iterator: Iterable<any>, asyncFn: Function): Promise
  * @param      {Function}          asyncFn      - The asynchronous function
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
-export declare function mapSeries(iterable: Iterable<any>, asyncFn: Function): Promise<any[]>;
+export declare function mapSeries(iterable: Iterable<any>, asyncFn: MapperFunction): Promise<any[]>;
 /**
  * map an async function across an iterable with up to N promises
  *
@@ -45,7 +47,6 @@ export declare function mapSeries(iterable: Iterable<any>, asyncFn: Function): P
  * @param      {Function}          asyncFn      - The asynchronous function
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
-export declare type MapperFunction = (element: any, index?: any) => any;
 export declare function mapConcurrent(iterator_in: Iterable<any>, asyncFn: MapperFunction, worker_count: number): Promise<any[]>;
 /**
  * Use n workers to resolve a function across an iterable. (via `.mapSeries`)
@@ -57,7 +58,7 @@ export declare function mapConcurrent(iterator_in: Iterable<any>, asyncFn: Mappe
  * @param      {Function}  asyncFn             - The async function
  * @return     {Promise<Array>}                 - Unordered array of resolved values
  */
-export declare function workerAll(number_of_workers: number, iterator_in: Iterable<any>, asyncFn: Function): Promise<any[]>;
+export declare function workerAll(number_of_workers: number, iterator_in: Iterable<any>, asyncFn: MapperFunction): Promise<any[]>;
 /**
  * Run a bunch of promises, if the first fails return the next until all promises have been checked.
  * All promises start resolving immediately.
@@ -98,7 +99,7 @@ export declare function allProps(obj: {
  */
 export declare function outerSettle(): any[];
 /**
- * Wait until a timestamp for some condition function to become truthey. Can be an async or standard function
+ * Wait until a timestamp or some condition function to become truthey. Can be an async or standard function
  * @param   {number}    timeout_ms       - The `Date` timestamp to wait until
  * @param   {function}  condition_fn     - The test function to call repeatedly
  * @param   {object}    options          - Options
@@ -107,11 +108,11 @@ export declare function outerSettle(): any[];
  * @returns {object}
  * @throws  {Error}
  */
-export declare function waitFor(timeout_ms: number, condition_fn: Function, { wait_ms, label }?: {
+export declare function waitFor(timeout_ms: number, condition_fn: BoolOrPromiseBoolFunction, { wait_ms, label }?: {
     wait_ms?: number;
     label?: string;
 }): Promise<{
     total_ms: number;
     count: number;
-    result: any;
+    result: true;
 }>;
