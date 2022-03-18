@@ -40,7 +40,7 @@ Create a promise and return the promise,resolve and reject Allows you to resolve
 `waitFor(timeout_ms, condition_fn, options) ⇒ object`<br>
 Wait until a timestamp for some condition function to become truthey. Can be an async or standard function
 
-[API docco](doc/API.md)
+[API docco](docs/modules.md)
 
 ```
 const { delay, mapSeries } = require('@mhio/pinky')
@@ -58,4 +58,4 @@ async function go(){
 go().catch(console.error)
 ```
 
-mhio 2021
+mhio 2022

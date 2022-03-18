@@ -18,7 +18,7 @@
 
 - [prepareStackTrace](DetailsError.md#preparestacktrace)
 - [stackTraceLimit](DetailsError.md#stacktracelimit)
-- [detail](DetailsError.md#detail)
+- [details](DetailsError.md#details)
 - [message](DetailsError.md#message)
 - [name](DetailsError.md#name)
 - [stack](DetailsError.md#stack)
@@ -103,13 +103,13 @@ node_modules/@types/node/globals.d.ts:13
 
 ___
 
-### detail
+### details
 
-• **detail**: `any`
+• **details**: `any`
 
 #### Defined in
 
-[src/pinky.ts:179](https://github.com/mhio/pinky/blob/02d72e3/src/pinky.ts#L179)
+[src/pinky.ts:179](https://github.com/mhio/pinky/blob/34fd1ab/src/pinky.ts#L179)
 
 ___
 
@@ -172,4 +172,4 @@ Error.constructor
 
 #### Defined in
 
-[src/pinky.ts:180](https://github.com/mhio/pinky/blob/02d72e3/src/pinky.ts#L180)
+[src/pinky.ts:180](https://github.com/mhio/pinky/blob/34fd1ab/src/pinky.ts#L180)
