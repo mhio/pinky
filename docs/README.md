@@ -1,3 +1,4 @@
+@mhio/pinky / [Exports](modules.md)
 
 pinky promise
 -------------
@@ -39,8 +40,7 @@ Create a promise and return the promise,resolve and reject Allows you to resolve
 `waitFor(timeout_ms, condition_fn, options) ⇒ object`<br>
 Wait until a timestamp for some condition function to become truthey. Can be an async or standard function
 
-
-[API docco](doc/modules.md)
+[API docco](doc/API.md)
 
 ```
 const { delay, mapSeries } = require('@mhio/pinky')
