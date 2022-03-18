@@ -3,6 +3,8 @@
 pinky promise
 -------------
 
+[github.com/mhio/pinky](https://github.com/mhio/pinky)
+
 ```
 yarn add @mhio/pinky
 ```
