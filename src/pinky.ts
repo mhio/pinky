@@ -1,20 +1,38 @@
 
-const pMap = require('p-map')
-function noop(){}
+import pMap from 'p-map'
+function noop(...args: any[]) : any {}
 
 /**
  * delay for ms
  * @param      {Number}           ms            - The milliseconds to delay for
  * @return     {Promise}   
  */
-function delay(ms) {
-  let timer
-  const promise = new Promise(function(ok){
-    timer = setTimeout(ok, ms)
+export function delay(ms: number) : Promise<void> {
+  return new Promise(function(ok){
+    setTimeout(ok, ms)
   })
-  promise.timer = timer
-  return promise
 }
+
+/**
+ * delay for ms
+ * @param      {Number}           ms            - The milliseconds to delay for
+ * @return     {Promise}   
+ */
+//  function delayCancel(ms: number) : Promise<void> {
+//   let timer: any
+//   let reject: Function
+//   const promise = new PromiseTimer(function(resolve, promise_reject){
+//     timer = setTimeout(resolve, ms)
+//     reject = promise_reject
+//     return true
+//   })
+//   promise.timer = timer
+//   promise.cancel = function(){
+//     clearTimeout(timer)
+//     reject(new Error('Timeout cancelled'))
+//   }
+//   return promise
+// }
 
 /**
  * Delay from a timestamp for milliseconds
@@ -22,11 +40,10 @@ function delay(ms) {
  * @param      {Number}           ms            - The milliseconds to delay for
  * @return     {Promise}   
  */
-async function delayFrom(ts, ms) {
-  const delay_left = Date.now() - ts
-  if (delay_left > ms) return delay(ms)
-  if (delay_left > 0) return delay(delay_left)
-  return undefined
+export async function delayFrom(ts: number, ms: number) : Promise<void> {
+  const delay_so_far = Date.now() - ts
+  if (delay_so_far > ms) return delay(ms)
+  if (delay_so_far > 1) return delay(ms - delay_so_far)
 }
 
 /**
@@ -34,10 +51,9 @@ async function delayFrom(ts, ms) {
  * @param      {Number}           ts            - The millisecond `Date` timestamp to start the delay from
  * @return     {Promise}   
  */
-async function delayTo(ts) {
+export async function delayTo(ts: number) : Promise<void> {
   const delay_left = Date.now() - ts
   if (delay_left > 0) return delay(delay_left)
-  return undefined
 }
 
 /**
@@ -47,7 +63,7 @@ async function delayTo(ts) {
  * @param      {Function}         asyncFn       - The asynchronous function
  * @return     {Promise.<Array>}                - Array of all resolved promise values
  */
-async function map(iterator, asyncFn){
+async function map(iterator: Iterable<any>, asyncFn: Function) : Promise<any[]> {
   const results = []
   for (const i of iterator) {
     results.push(asyncFn(i))
@@ -77,10 +93,10 @@ function* filterP(iterable, fn) {
  * @param      {Function}          asyncFn      - The asynchronous function
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
-async function mapSeries(iterator, asyncFn){
+export async function mapSeries(iterable: Iterable<any>, asyncFn: Function) : Promise<any[]> {
   const results = []
-  for (const i of iterator) {
-    results.push(await asyncFn(i))
+  for (const ent of iterable) {
+    results.push(await asyncFn(ent))
   }
   return results
 }
@@ -92,7 +108,10 @@ async function mapSeries(iterator, asyncFn){
  * @param      {Function}          asyncFn      - The asynchronous function
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
-async function mapWorkers(iterable, worker_count, asyncFn){
+
+export type MapperFunction = (element: any, index: any) => any;
+
+export async function mapWorkers(iterable: Iterable<any>, worker_count: number, asyncFn: MapperFunction) : Promise<any[]> {
   return pMap(iterable, asyncFn, { concurrency: worker_count })
 }
 
@@ -106,7 +125,7 @@ async function mapWorkers(iterable, worker_count, asyncFn){
  * @param      {Function}  asyncFn             - The async function
  * @return     {Promise<Array>}                 - Unordered array of resolved values
  */
-async function workerAll(number_of_workers, iterator_in, asyncFn){
+export async function workerAll(number_of_workers: number, iterator_in: Iterable<any>, asyncFn: Function) : Promise<any[]> {
   const worker_promises = []
   // const iterator = (iterator_in.entries) ? iterator_in.entries() : iterator_in
   const iterator = iterator_in
@@ -114,7 +133,7 @@ async function workerAll(number_of_workers, iterator_in, asyncFn){
     worker_promises.push(mapSeries(iterator, asyncFn))
   }
   const raw_results = await Promise.all(worker_promises)
-  let results = []
+  let results: any[] = []
   for (const result_array of raw_results) {
     results = results.concat(result_array)
   }
@@ -128,8 +147,8 @@ async function workerAll(number_of_workers, iterator_in, asyncFn){
  * @param      {Iterable.<Promise>}   iterable  The iterable
  * @return     {Promise}  { description_of_the_return_value }
  */
-async function firstWithoutError(iterable) {
-  const promises = []
+export async function firstWithoutError(iterable: Iterable<Promise<any>>) {
+  const promises: Promise<any>[] = []
   // Start resolving all promises from the iterable
   for (const thenable of iterable) {
     const promise = Promise.resolve(thenable)
@@ -139,10 +158,17 @@ async function firstWithoutError(iterable) {
   return firstInSeriesWithoutError(promises)
 }
 
-
-class AggregateError extends Error {
-  constructor(errors){
-    super('Multiple errors')
+export class DetailsError extends Error {
+  detail: any
+  constructor(message: string, details: any){
+    super(message)
+    this.detail = details
+  }
+}
+export class AggregateError extends Error {
+  errors: Array<Error>
+  constructor(message: string, errors: Array<Error>){
+    super(message)
     this.errors = errors
   }
 }
@@ -153,16 +179,16 @@ class AggregateError extends Error {
  * @param      {Iterable.<Promise>}   iterable  The iterable
  * @return     {Promise}  { description_of_the_return_value }
  */
-async function firstInSeriesWithoutError(iterable) {
-  const errors = []
+export async function firstInSeriesWithoutError(iterable: Iterable<Promise<any>>) {
+  const errors: Error[] = []
   for (const thenable of iterable) {
     try {
       return await thenable
-    } catch (error) {
+    } catch (error: any) {
       errors.push(error)
     }
   }
-  throw new AggregateError(errors)
+  throw new AggregateError('Series errors', errors)
 }
 
 
@@ -171,14 +197,14 @@ async function firstInSeriesWithoutError(iterable) {
  * @param     {object}    obj     - The object to resolve properties of
  * @return    {object}    obj     - New object of resolved promise properties
  */
-async function allProps(obj){
-  const promises = {}
+export async function allProps(obj: { [key: string]: Promise<any> }){
+  const promises: { [key: string]: Promise<any> } = {}
   for (let key in obj) {
     const promise = Promise.resolve(obj[key])
     promises[key] = promise
     promise.catch(() => { }) // ignore rejections for now
   }
-  const results = {}
+  const results: { [key: string]: any }  = {}
   for (let key in promises) {
     results[key] = await promises[key]
   }
@@ -191,7 +217,7 @@ async function allProps(obj){
  * Allows you to choose whether to resolve/reject something outside the promise scope
  * @returns {Array} - [ promise, resolve, reject ]
  */
-function outerSettle(){
+export function outerSettle(){
   // can't find/remember the use case, seems Promise.resolve/reject would do this, unless a function in passed in
   let outerResolve
   let outerReject
@@ -213,7 +239,7 @@ function outerSettle(){
  * @returns {object}
  * @throws  {Error}
  */
-async function waitFor (timeout_ms, condition_fn, { wait_ms = 1000, label = 'condition' /*backoff = 'linear'*/ } = {}) {
+export async function waitFor (timeout_ms: number, condition_fn: Function, { wait_ms = 1000, label = 'condition' /*backoff = 'linear'*/ } = {}) {
   let count = 0
   const start = Date.now()
   const timeout = start + timeout_ms
@@ -224,28 +250,7 @@ async function waitFor (timeout_ms, condition_fn, { wait_ms = 1000, label = 'con
     count++
   }
   // Maybe allow `Error` to be user supplied constructor
-  const err = new Error(`Timeout waiting for ${label}`)
-  err.details = {
+  throw new DetailsError(`Timeout waiting for ${label}`, {
     wait_ms, label, timeout_ms, condition_fn,
-  }
-  throw err
-}
-
-
-// Exports
-module.exports = { 
-  noop,
-  map,
-  mapSeries,
-  mapWorkers,
-  workerAll,
-  firstWithoutError,
-  firstInSeriesWithoutError,
-  allProps,
-  delay,
-  delayFrom,
-  delayTo,
-  outerSettle,
-  waitFor,
-  AggregateError,
+  })
 }
