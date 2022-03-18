@@ -267,7 +267,7 @@ function mapConcurrent(iterator_in, asyncFn, worker_count) {
                     p = asyncFn(item, count);
                     results.push(p);
                     running.push(p);
-                    if (!(running.length > worker_count)) return [3 /*break*/, 4];
+                    if (!(running.length >= worker_count)) return [3 /*break*/, 4];
                     return [4 /*yield*/, new Promise(function (resolve) {
                             var _loop_1 = function (i) {
                                 var j_1 = i;

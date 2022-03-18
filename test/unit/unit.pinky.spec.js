@@ -20,6 +20,8 @@ const delayReturnMsEntries = ([,v]) => {
   if (v === false) throw new Error('false')
   return delay(v).then(() => v)
 }
+const sumArray = (arr) => arr.reduce((a, i) => a + i, 0)
+const maxArray = (arr) => arr.reduce((a, i) => (i > a) ? i : a, 0)
 
 describe('test', function(){
  
@@ -53,22 +55,35 @@ describe('test', function(){
   })
 
   it('should mapSeries', async function(){
-    const res = await mapSeries([30,15,1], delayReturnMs)
+    const vals = [30,15,1]
+    const total_vals = sumArray(vals)
+    const start_ts = Date.now()
+    const res = await mapSeries(vals, delayReturnMs)
     expect(res).to.eql([30,15,1])
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_vals)
   })
 
   it('should mapConcurrent 1 array', async function(){
-    const res = await mapConcurrent([30,15,1,29,2], delayReturnMs, 1)
-    expect(res).to.eql([30,15,1,29,2])
+    const vals = [30,15,1,29,2]
+    const total_vals = sumArray(vals)
+    const start_ts = Date.now()
+    const res = await mapConcurrent(vals, delayReturnMs, 1)
+    expect(res).to.eql(vals)
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_vals)
   })
 
   it('should mapConcurrent 2 array', async function(){
+    const start_ts = Date.now()
     const res = await mapConcurrent([30,15,1,29,2], delayReturnMs, 2)
     expect(res).to.eql([30,15,1,29,2])
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(31)
   })
   it('should mapConcurrent 3 array', async function(){
+    const start_ts = Date.now()
     const res = await mapConcurrent([30,15,1,29,2], delayReturnMs, 3)
     expect(res).to.eql([30,15,1,29,2])
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(30)
+    expect(Date.now() - start_ts).to.be.lessThan(35)
   })
 
   it('should mapConcurrent 1 iterator', async function(){

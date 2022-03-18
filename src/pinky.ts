@@ -131,7 +131,7 @@ export async function mapConcurrent(iterator_in: Iterable<any>, asyncFn: MapperF
     results.push(p)
     running.push(p)
 
-    if (running.length > worker_count) {
+    if (running.length >= worker_count) {
       // await Promise.race(running)
       const j: number = await new Promise((resolve) => {
         for (let i = 0; i < running.length; i++) {

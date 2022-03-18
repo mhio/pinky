@@ -109,7 +109,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:193](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L193)
+[src/pinky.ts:193](https://github.com/mhio/pinky/blob/a271525/src/pinky.ts#L193)
 
 ___
 
@@ -172,4 +172,4 @@ Error.constructor
 
 #### Defined in
 
-[src/pinky.ts:194](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L194)
+[src/pinky.ts:194](https://github.com/mhio/pinky/blob/a271525/src/pinky.ts#L194)
