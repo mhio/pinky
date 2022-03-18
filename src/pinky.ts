@@ -9,8 +9,8 @@ export function noop() : void {
 
 /**
  * delay for ms
- * @param      {Number}           ms            - The milliseconds to delay for
- * @return     {Promise}   
+ * @param ms The milliseconds to delay for
+ * @returns 
  */
 export function delay(ms: number) : Promise<void> {
   return new Promise(function(ok){
@@ -47,8 +47,11 @@ export function delay(ms: number) : Promise<void> {
  */
 export async function delayFrom(ts: number, ms: number) : Promise<void> {
   const delay_so_far = Date.now() - ts
+  // Already done, all good
   if (delay_so_far > ms) return
+  // Bit more to go
   else if (delay_so_far > 0) return delay(ms - delay_so_far)
+  // Time went backwards... hmmmm
   else return delay(ms)
 }
 
