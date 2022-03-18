@@ -1,7 +1,7 @@
 {
   "name": "@mhio/pinky",
   "version": "0.5.0",
-  "main": "src/pinky.js",
+  "main": "dist/pinky.js",
   "license": "MIT",
   "scripts": {
     "test": "mocha test/unit test/int",
@@ -19,14 +19,15 @@
     "watch": "nodemon -i test/output/ -x"
   },
   "devDependencies": {
+    "@types/node": "^16",
     "chai": "^4.2.0",
     "chai-subset": "^1.6.0",
     "eslint": "^7.19.0",
-    "jsdoc": "^3.6.6",
-    "jsdoc-to-markdown": "^6.0.1",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.6",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "typedoc": "^0.22.13",
+    "typescript": "^4.5.5"
   },
   "dependencies": {
     "p-map": "4.0.0"
