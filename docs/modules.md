@@ -46,7 +46,7 @@
 
 #### Defined in
 
-[src/pinky.ts:3](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L3)
+[src/pinky.ts:3](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L3)
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:2](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L2)
+[src/pinky.ts:2](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L2)
 
 ## Functions
 
@@ -95,7 +95,7 @@ obj     - New object of resolved promise properties
 
 #### Defined in
 
-[src/pinky.ts:228](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L228)
+[src/pinky.ts:231](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L231)
 
 ___
 
@@ -117,7 +117,7 @@ delay for ms
 
 #### Defined in
 
-[src/pinky.ts:15](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L15)
+[src/pinky.ts:15](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L15)
 
 ___
 
@@ -140,7 +140,7 @@ Delay from a timestamp for milliseconds
 
 #### Defined in
 
-[src/pinky.ts:48](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L48)
+[src/pinky.ts:48](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L48)
 
 ___
 
@@ -162,7 +162,7 @@ Delay until a timestamp milliseconds
 
 #### Defined in
 
-[src/pinky.ts:60](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L60)
+[src/pinky.ts:63](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L63)
 
 ___
 
@@ -186,7 +186,7 @@ Run a bunch of promises in series, if the one fails move onto the next.
 
 #### Defined in
 
-[src/pinky.ts:210](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L210)
+[src/pinky.ts:213](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L213)
 
 ___
 
@@ -211,7 +211,7 @@ All promises start resolving immediately.
 
 #### Defined in
 
-[src/pinky.ts:178](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L178)
+[src/pinky.ts:181](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L181)
 
 ___
 
@@ -236,7 +236,7 @@ Array of resolved promises
 
 #### Defined in
 
-[src/pinky.ts:71](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L71)
+[src/pinky.ts:74](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L74)
 
 ___
 
@@ -262,7 +262,7 @@ map an async function across an iterable with up to N promises
 
 #### Defined in
 
-[src/pinky.ts:122](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L122)
+[src/pinky.ts:125](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L125)
 
 ___
 
@@ -287,7 +287,7 @@ map an async function in series across an iterable
 
 #### Defined in
 
-[src/pinky.ts:103](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L103)
+[src/pinky.ts:106](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L106)
 
 ___
 
@@ -301,7 +301,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:6](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L6)
+[src/pinky.ts:6](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L6)
 
 ___
 
@@ -320,7 +320,7 @@ Allows you to choose whether to resolve/reject something outside the promise sco
 
 #### Defined in
 
-[src/pinky.ts:248](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L248)
+[src/pinky.ts:251](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L251)
 
 ___
 
@@ -348,7 +348,7 @@ Wait until a timestamp or some condition function to become truthey. Can be an a
 
 #### Defined in
 
-[src/pinky.ts:270](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L270)
+[src/pinky.ts:273](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L273)
 
 ___
 
@@ -376,4 +376,4 @@ if you need to inspect results include some type of id in the return.
 
 #### Defined in
 
-[src/pinky.ts:156](https://github.com/mhio/pinky/blob/0bf77e8/src/pinky.ts#L156)
+[src/pinky.ts:159](https://github.com/mhio/pinky/blob/a5db10b/src/pinky.ts#L159)
