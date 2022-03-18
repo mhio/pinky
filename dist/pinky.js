@@ -70,8 +70,8 @@ function noop() {
 exports.noop = noop;
 /**
  * delay for ms
- * @param      {Number}           ms            - The milliseconds to delay for
- * @return     {Promise}
+ * @param ms The milliseconds to delay for
+ * @returns
  */
 function delay(ms) {
     return new Promise(function (ok) {
@@ -110,10 +110,15 @@ function delayFrom(ts, ms) {
         var delay_so_far;
         return __generator(this, function (_a) {
             delay_so_far = Date.now() - ts;
+            // Already done, all good
             if (delay_so_far > ms)
                 return [2 /*return*/];
+            // Bit more to go
             else if (delay_so_far > 0)
-                return [2 /*return*/, delay(ms - delay_so_far)];
+                return [2 /*return*/, delay(ms - delay_so_far)
+                    // Time went backwards... hmmmm
+                ];
+            // Time went backwards... hmmmm
             else
                 return [2 /*return*/, delay(ms)];
             return [2 /*return*/];

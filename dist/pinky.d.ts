@@ -3,8 +3,8 @@ export declare type BoolOrPromiseBoolFunction = () => boolean | Promise<boolean>
 export declare function noop(): void;
 /**
  * delay for ms
- * @param      {Number}           ms            - The milliseconds to delay for
- * @return     {Promise}
+ * @param ms The milliseconds to delay for
+ * @returns
  */
 export declare function delay(ms: number): Promise<void>;
 /**
