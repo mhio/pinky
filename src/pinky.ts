@@ -40,8 +40,9 @@ export function delay(ms: number) : Promise<void> {
  */
 export async function delayFrom(ts: number, ms: number) : Promise<void> {
   const delay_so_far = Date.now() - ts
-  if (delay_so_far > ms) return delay(ms)
-  if (delay_so_far > 1) return delay(ms - delay_so_far)
+  if (delay_so_far > ms) return
+  else if (delay_so_far > 0) return delay(ms - delay_so_far)
+  else return delay(ms)
 }
 
 /**
@@ -65,7 +66,7 @@ export async function map(iterator: Iterable<any>, asyncFn: Function) : Promise<
   for (const i of iterator) {
     results.push(asyncFn(i))
   }
-  return await Promise.all(results)
+  return Promise.all(results)
 }
 
 /*

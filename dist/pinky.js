@@ -113,9 +113,11 @@ function delayFrom(ts, ms) {
         return __generator(this, function (_a) {
             delay_so_far = Date.now() - ts;
             if (delay_so_far > ms)
-                return [2 /*return*/, delay(ms)];
-            if (delay_so_far > 1)
+                return [2 /*return*/];
+            else if (delay_so_far > 0)
                 return [2 /*return*/, delay(ms - delay_so_far)];
+            else
+                return [2 /*return*/, delay(ms)];
             return [2 /*return*/];
         });
     });
@@ -149,25 +151,21 @@ function map(iterator, asyncFn) {
         var results, iterator_1, iterator_1_1, i;
         var e_1, _a;
         return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    results = [];
-                    try {
-                        for (iterator_1 = __values(iterator), iterator_1_1 = iterator_1.next(); !iterator_1_1.done; iterator_1_1 = iterator_1.next()) {
-                            i = iterator_1_1.value;
-                            results.push(asyncFn(i));
-                        }
-                    }
-                    catch (e_1_1) { e_1 = { error: e_1_1 }; }
-                    finally {
-                        try {
-                            if (iterator_1_1 && !iterator_1_1.done && (_a = iterator_1["return"])) _a.call(iterator_1);
-                        }
-                        finally { if (e_1) throw e_1.error; }
-                    }
-                    return [4 /*yield*/, Promise.all(results)];
-                case 1: return [2 /*return*/, _b.sent()];
+            results = [];
+            try {
+                for (iterator_1 = __values(iterator), iterator_1_1 = iterator_1.next(); !iterator_1_1.done; iterator_1_1 = iterator_1.next()) {
+                    i = iterator_1_1.value;
+                    results.push(asyncFn(i));
+                }
             }
+            catch (e_1_1) { e_1 = { error: e_1_1 }; }
+            finally {
+                try {
+                    if (iterator_1_1 && !iterator_1_1.done && (_a = iterator_1["return"])) _a.call(iterator_1);
+                }
+                finally { if (e_1) throw e_1.error; }
+            }
+            return [2 /*return*/, Promise.all(results)];
         });
     });
 }
