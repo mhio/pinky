@@ -1,6 +1,6 @@
 {
   "name": "@mhio/pinky",
-  "version": "0.5.0",
+  "version": "0.6.0-0",
   "main": "dist/pinky.js",
   "license": "MIT",
   "scripts": {
