@@ -12,7 +12,8 @@
     "test:lint": "eslint src/pinky.js test/",
     "build": "set -uex; yarn run build:ts; yarn run build:doc",
     "build:ts": "tsc --downlevelIteration --sourceMap --declaration --outDir dist/ src/pinky.ts",
-    "build:doc": "typedoc --plugin typedoc-plugin-markdown --sort static-first --sort alphabetical src/pinky.ts",
+    "build:docs": "typedoc --plugin typedoc-plugin-markdown --sort static-first --sort alphabetical src/pinky.ts",
+    "build:docs:html": "typedoc --out docs/pages --sort static-first --sort alphabetical src/pinky.ts",
     "release:test": "set -uex; yarn test; npm version prerelease; npm publish --access public --tag testing",
     "release:patch": "set -uex; git pull; rm -rf node_modules; yarn; yarn run test:coverage; yarn run test:lint; yarn run build; npm version patch; git push; npm publish --access public; git push --tags",
     "watch": "nodemon -i test/output/ -x"
