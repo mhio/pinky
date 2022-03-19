@@ -175,20 +175,6 @@ function map(iterator, asyncFn) {
     });
 }
 exports.map = map;
-/*
-function* mapP(iterable, fn) {
-    let i = 0
-    for (const item of iterable)
-      yield fn(item, i++, iterable);
-}
-function* filterP(iterable, fn) {
-    let i = 0
-    for (const item of iterable)
-      if (fn(item, i++, iterable))
-        yield item;
-}
-
-*/
 /**
  * map an async function in series across an iterable
  *
