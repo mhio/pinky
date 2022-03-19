@@ -10,6 +10,7 @@ const {
   map,
   mapSeries,
   mapConcurrent,
+  mapConcurrentViaHash,
   workerAll,
   firstInSeriesWithoutError,
   firstWithoutError,
@@ -78,6 +79,7 @@ describe('test', function(){
     expect(res).to.eql([30,15,1,29,2])
     expect(Date.now() - start_ts).to.be.greaterThanOrEqual(31)
   })
+  
   it('should mapConcurrent 3 array', async function(){
     const start_ts = Date.now()
     const res = await mapConcurrent([30,15,1,29,2], delayReturnMs, 3)

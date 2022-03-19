@@ -52,6 +52,7 @@ export declare function mapConcurrent(iterator_in: Iterable<any>, asyncFn: Mappe
  * Use n workers to resolve a function across an iterable. (via `.mapSeries`)
  * Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
  * if you need to inspect results include some type of id in the return.
+ * `mapConcurrent` should replace this
  *
  * @param      {number}    number_of_workers    - Number of functions to execute
  * @param      {Iterable.<Any>}    iterator_in          - The iterator of values to use

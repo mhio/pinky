@@ -248,7 +248,7 @@ exports.mapSeries = mapSeries;
  */
 function mapConcurrent(iterator_in, asyncFn, worker_count) {
     return __awaiter(this, void 0, void 0, function () {
-        var results, running, count, iterator_in_1, iterator_in_1_1, item, p, j, e_3_1;
+        var results, running, count, _loop_1, iterator_in_1, iterator_in_1_1, item, e_3_1;
         var e_3, _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
@@ -256,49 +256,55 @@ function mapConcurrent(iterator_in, asyncFn, worker_count) {
                     results = [];
                     running = [];
                     count = 0;
+                    _loop_1 = function (item) {
+                        var p_index, p, fn, j;
+                        return __generator(this, function (_c) {
+                            switch (_c.label) {
+                                case 0:
+                                    p_index = count;
+                                    p = asyncFn(item, p_index);
+                                    results.push(p);
+                                    fn = function () { return p_index; };
+                                    running.push(p.then(fn, fn));
+                                    if (!(running.length >= worker_count)) return [3 /*break*/, 2];
+                                    return [4 /*yield*/, Promise.race(running)];
+                                case 1:
+                                    j = _c.sent();
+                                    running.splice(j, 1);
+                                    _c.label = 2;
+                                case 2:
+                                    count++;
+                                    return [2 /*return*/];
+                            }
+                        });
+                    };
                     _b.label = 1;
                 case 1:
-                    _b.trys.push([1, 7, 8, 9]);
+                    _b.trys.push([1, 6, 7, 8]);
                     iterator_in_1 = __values(iterator_in), iterator_in_1_1 = iterator_in_1.next();
                     _b.label = 2;
                 case 2:
-                    if (!!iterator_in_1_1.done) return [3 /*break*/, 6];
+                    if (!!iterator_in_1_1.done) return [3 /*break*/, 5];
                     item = iterator_in_1_1.value;
-                    p = asyncFn(item, count);
-                    results.push(p);
-                    running.push(p);
-                    if (!(running.length >= worker_count)) return [3 /*break*/, 4];
-                    return [4 /*yield*/, new Promise(function (resolve) {
-                            var _loop_1 = function (i) {
-                                var j_1 = i;
-                                running[j_1].then(function () { return resolve(j_1); }, function () { return resolve(j_1); });
-                            };
-                            for (var i = 0; i < running.length; i++) {
-                                _loop_1(i);
-                            }
-                        })];
+                    return [5 /*yield**/, _loop_1(item)];
                 case 3:
-                    j = _b.sent();
-                    running.splice(j, 1);
+                    _b.sent();
                     _b.label = 4;
                 case 4:
-                    count++;
-                    _b.label = 5;
-                case 5:
                     iterator_in_1_1 = iterator_in_1.next();
                     return [3 /*break*/, 2];
-                case 6: return [3 /*break*/, 9];
-                case 7:
+                case 5: return [3 /*break*/, 8];
+                case 6:
                     e_3_1 = _b.sent();
                     e_3 = { error: e_3_1 };
-                    return [3 /*break*/, 9];
-                case 8:
+                    return [3 /*break*/, 8];
+                case 7:
                     try {
                         if (iterator_in_1_1 && !iterator_in_1_1.done && (_a = iterator_in_1["return"])) _a.call(iterator_in_1);
                     }
                     finally { if (e_3) throw e_3.error; }
                     return [7 /*endfinally*/];
-                case 9: return [2 /*return*/, Promise.all(results)];
+                case 8: return [2 /*return*/, Promise.all(results)];
             }
         });
     });
@@ -308,6 +314,7 @@ exports.mapConcurrent = mapConcurrent;
  * Use n workers to resolve a function across an iterable. (via `.mapSeries`)
  * Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
  * if you need to inspect results include some type of id in the return.
+ * `mapConcurrent` should replace this
  *
  * @param      {number}    number_of_workers    - Number of functions to execute
  * @param      {Iterable.<Any>}    iterator_in          - The iterator of values to use

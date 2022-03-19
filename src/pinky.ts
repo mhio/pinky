@@ -121,24 +121,19 @@ export async function mapSeries(iterable: Iterable<any>, asyncFn: MapperFunction
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
 
-
 export async function mapConcurrent(iterator_in: Iterable<any>, asyncFn: MapperFunction, worker_count: number) : Promise<any[]>{
   const results: Promise<any>[] = []
   const running: Promise<any>[] = []
   let count = 0
   for (const item of iterator_in) {
-    const p = asyncFn(item, count)
+    const p_index = count
+    const p = asyncFn(item, p_index)
     results.push(p)
-    running.push(p)
+    const fn = function () { return p_index }
+    running.push(p.then(fn, fn))
 
     if (running.length >= worker_count) {
-      // await Promise.race(running)
-      const j: number = await new Promise((resolve) => {
-        for (let i = 0; i < running.length; i++) {
-          const j = i
-          running[j].then(()=> resolve(j), ()=>resolve(j))
-        }
-      })
+      const j = await Promise.race(running)
       running.splice(j, 1)
     }
     count++
@@ -146,10 +141,12 @@ export async function mapConcurrent(iterator_in: Iterable<any>, asyncFn: MapperF
   return Promise.all(results);
 }
 
+
 /**
  * Use n workers to resolve a function across an iterable. (via `.mapSeries`)
  * Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
  * if you need to inspect results include some type of id in the return.
+ * `mapConcurrent` should replace this
  *
  * @param      {number}    number_of_workers    - Number of functions to execute
  * @param      {Iterable.<Any>}    iterator_in          - The iterator of values to use
