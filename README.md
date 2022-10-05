@@ -6,6 +6,7 @@ pinky promise
 
 ```
 yarn add @mhio/pinky
+npm i @mhio/pinky
 ```
 
 `delay(ms) ⇒ Promise`<br>
