@@ -114,7 +114,7 @@ export async function mapConcurrent(iterator_in: Iterable<any>, asyncFn: MapperF
     const p_index = count
     const p = asyncFn(item, p_index)
     results.push(p)
-    const fn = function () { return p_index }
+    const fn = function mapConcurrentRunningResolver () { return p_index }
     running.push(p.then(fn, fn))
 
     if (running.length >= worker_count) {
