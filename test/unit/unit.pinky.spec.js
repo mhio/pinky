@@ -180,13 +180,26 @@ describe('test', function(){
   })
 
 
-  it('outerSettles', async function(){
+  it('outerSettle returns things', async function(){
     const [ p, resolve, reject ] = outerSettle()
     expect(resolve).to.be.a('function')
     expect(reject).to.be.a('function')
+  })
+  it('outerSettle resolves things', async function(){
+    const [ p, resolve, reject ] = outerSettle()
     resolve(true)
     const res = await p
     expect(res).to.equal(true)
   })
-
+  it('outerSettle rejects things', async function(){
+    const [ p, resolve, reject ] = outerSettle()
+    try {
+      reject(new Error('gahhhhh'))
+      await p
+      expect.fail('should not get here')
+    }
+    catch (error){
+      expect(error.message).to.equal('gahhhhh')
+    }
+  })
 })

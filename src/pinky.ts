@@ -228,17 +228,24 @@ export async function allProps(obj: { [key: string]: Promise<any> }){
 /**
  * Create a promise and return the promise, resolve and reject
  * Allows you to choose whether to resolve/reject something outside the promise scope
- * @returns {Array} - [ promise, resolve, reject ]
  */
-export function outerSettle(){
+type PromiseResolve = (value: any | PromiseLike<any>) => void
+type PromiseReject = (reason?: any) => void
+type OuterSettleReturn = [ PromiseLike<any>, PromiseResolve, PromiseReject]
+// interface OuterSettleReturn {
+//   promise: PromiseLike<any>
+//   resolve: PromiseResolve
+//   reject: PromiseReject
+// }
+export function outerSettle(): OuterSettleReturn {
   // can't find/remember the use case, seems Promise.resolve/reject would do this, unless a function in passed in
-  let outerResolve
-  let outerReject
+  let outerResolve!: PromiseResolve
+  let outerReject!: PromiseReject
   const promise = new Promise(function (resolve, reject) {
     outerResolve = resolve
     outerReject = reject
   })
-  //return { promise, resolve: outerResolve, reject: outerReject }
+  // return { promise, resolve: outerResolve, reject: outerReject }
   return [ promise, outerResolve, outerReject ]
 }
 
