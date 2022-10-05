@@ -250,7 +250,7 @@ function mapConcurrent(iterator_in, asyncFn, worker_count) {
                                     p_index = count;
                                     p = asyncFn(item, p_index);
                                     results.push(p);
-                                    fn = function () { return p_index; };
+                                    fn = function mapConcurrentRunningResolver() { return p_index; };
                                     running.push(p.then(fn, fn));
                                     if (!(running.length >= worker_count)) return [3 /*break*/, 2];
                                     return [4 /*yield*/, Promise.race(running)];
