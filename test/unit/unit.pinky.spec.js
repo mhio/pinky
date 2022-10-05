@@ -188,8 +188,7 @@ describe('test', function(){
   it('outerSettle resolves things', async function(){
     const [ p, resolve, reject ] = outerSettle()
     resolve(true)
-    const res = await p
-    expect(res).to.equal(true)
+    expect(await p).to.equal(true)
   })
   it('outerSettle rejects things', async function(){
     const [ p, resolve, reject ] = outerSettle()
