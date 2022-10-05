@@ -238,7 +238,6 @@ type OuterSettleReturn = [ PromiseLike<any>, PromiseResolve, PromiseReject]
 //   reject: PromiseReject
 // }
 export function outerSettle(): OuterSettleReturn {
-  // can't find/remember the use case, seems Promise.resolve/reject would do this, unless a function in passed in
   let outerResolve!: PromiseResolve
   let outerReject!: PromiseReject
   const promise = new Promise(function (resolve, reject) {
