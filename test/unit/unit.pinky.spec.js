@@ -70,6 +70,7 @@ describe('test', function(){
     const start_ts = Date.now()
     const res = await mapConcurrent(vals, delayReturnMs, 1)
     expect(res).to.eql(vals)
+    // seen this fail once with 76ms instead of 77+. Maybe during a time adjust?
     expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_vals)
   })
 
