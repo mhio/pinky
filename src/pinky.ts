@@ -99,6 +99,23 @@ export async function mapSeries(iterable: Iterable<any>, asyncFn: MapperFunction
 }
 
 /**
+ * map an async function in series across an async iterable
+ *
+ * @param      {Iterable.<Any>}    iterator     - The iterator
+ * @param      {Function}          asyncFn      - The asynchronous function
+ * @return     {Promise.<Array>}                - Array of all resolved values
+ */
+export async function mapSeriesAsync(iterable: AsyncIterable<any>, asyncFn: MapperFunction) : Promise<any[]> {
+  const results = []
+  let i = 0
+  for await (const e of iterable) {
+    results.push(await asyncFn(e, i))
+    i++
+  }
+  return results
+}
+
+/**
  * map an async function across an iterable with up to N promises
  *
  * @param      {Iterable.<Any>}    iterator     - The iterator
@@ -152,6 +169,33 @@ export async function workerAll(number_of_workers: number, iterator_in: Iterable
   }
   return results
 }
+
+/**
+ * Use n workers to resolve a function across an async iterable. (via `.mapSeriesAsync`)
+ * Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
+ * if you need to inspect results include some type of id in the return.
+ * `mapConcurrent` should replace this
+ *
+ * @param      {number}                 number_of_workers   - Number of functions to execute
+ * @param      {AsyncIterable.<Any>}    async_iterator      - The iterator of values to use
+ * @param      {Function}               asyncFn             - The async function
+ * @return     {Promise<Array>}                             - Unordered array of resolved values
+ */
+export async function workerAllAsync(number_of_workers: number, async_iterator: AsyncIterable<any>, asyncFn: MapperFunction)
+: Promise<any[]>
+{
+  const worker_promises = []
+  for (let i=1; i <= number_of_workers; i++) {
+    worker_promises.push(mapSeriesAsync(async_iterator, asyncFn))
+  }
+  const raw_results = await Promise.all(worker_promises)
+  let results: any[] = []
+  for (const result_array of raw_results) {
+    results = results.concat(result_array)
+  }
+  return results
+}
+
 
 /**
  * Run a bunch of promises, if the first fails return the next until all promises have been checked. 

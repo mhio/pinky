@@ -50,6 +50,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __asyncValues = (this && this.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+};
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -62,7 +69,7 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 exports.__esModule = true;
-exports.waitFor = exports.outerSettle = exports.allProps = exports.firstInSeriesWithoutError = exports.AggregateError = exports.DetailsError = exports.firstWithoutError = exports.workerAll = exports.mapConcurrent = exports.mapSeries = exports.map = exports.delayTo = exports.delayFrom = exports.delay = exports.noop = void 0;
+exports.waitFor = exports.outerSettle = exports.allProps = exports.firstInSeriesWithoutError = exports.AggregateError = exports.DetailsError = exports.firstWithoutError = exports.workerAllAsync = exports.workerAll = exports.mapConcurrent = exports.mapSeriesAsync = exports.mapSeries = exports.map = exports.delayTo = exports.delayFrom = exports.delay = exports.noop = void 0;
 //export function noop(...args: any[]) : any {
 function noop() {
     // do nothing.
@@ -226,6 +233,62 @@ function mapSeries(iterable, asyncFn) {
 }
 exports.mapSeries = mapSeries;
 /**
+ * map an async function in series across an async iterable
+ *
+ * @param      {Iterable.<Any>}    iterator     - The iterator
+ * @param      {Function}          asyncFn      - The asynchronous function
+ * @return     {Promise.<Array>}                - Array of all resolved values
+ */
+function mapSeriesAsync(iterable, asyncFn) {
+    var iterable_2, iterable_2_1;
+    var e_3, _a;
+    return __awaiter(this, void 0, void 0, function () {
+        var results, i, e, _b, _c, e_3_1;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    results = [];
+                    i = 0;
+                    _d.label = 1;
+                case 1:
+                    _d.trys.push([1, 7, 8, 13]);
+                    iterable_2 = __asyncValues(iterable);
+                    _d.label = 2;
+                case 2: return [4 /*yield*/, iterable_2.next()];
+                case 3:
+                    if (!(iterable_2_1 = _d.sent(), !iterable_2_1.done)) return [3 /*break*/, 6];
+                    e = iterable_2_1.value;
+                    _c = (_b = results).push;
+                    return [4 /*yield*/, asyncFn(e, i)];
+                case 4:
+                    _c.apply(_b, [_d.sent()]);
+                    i++;
+                    _d.label = 5;
+                case 5: return [3 /*break*/, 2];
+                case 6: return [3 /*break*/, 13];
+                case 7:
+                    e_3_1 = _d.sent();
+                    e_3 = { error: e_3_1 };
+                    return [3 /*break*/, 13];
+                case 8:
+                    _d.trys.push([8, , 11, 12]);
+                    if (!(iterable_2_1 && !iterable_2_1.done && (_a = iterable_2["return"]))) return [3 /*break*/, 10];
+                    return [4 /*yield*/, _a.call(iterable_2)];
+                case 9:
+                    _d.sent();
+                    _d.label = 10;
+                case 10: return [3 /*break*/, 12];
+                case 11:
+                    if (e_3) throw e_3.error;
+                    return [7 /*endfinally*/];
+                case 12: return [7 /*endfinally*/];
+                case 13: return [2 /*return*/, results];
+            }
+        });
+    });
+}
+exports.mapSeriesAsync = mapSeriesAsync;
+/**
  * map an async function across an iterable with up to N promises
  *
  * @param      {Iterable.<Any>}    iterator     - The iterator
@@ -234,8 +297,8 @@ exports.mapSeries = mapSeries;
  */
 function mapConcurrent(iterator_in, asyncFn, worker_count) {
     return __awaiter(this, void 0, void 0, function () {
-        var results, running, count, _loop_1, iterator_in_1, iterator_in_1_1, item, e_3_1;
-        var e_3, _a;
+        var results, running, count, _loop_1, iterator_in_1, iterator_in_1_1, item, e_4_1;
+        var e_4, _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -281,14 +344,14 @@ function mapConcurrent(iterator_in, asyncFn, worker_count) {
                     return [3 /*break*/, 2];
                 case 5: return [3 /*break*/, 8];
                 case 6:
-                    e_3_1 = _b.sent();
-                    e_3 = { error: e_3_1 };
+                    e_4_1 = _b.sent();
+                    e_4 = { error: e_4_1 };
                     return [3 /*break*/, 8];
                 case 7:
                     try {
                         if (iterator_in_1_1 && !iterator_in_1_1.done && (_a = iterator_in_1["return"])) _a.call(iterator_in_1);
                     }
-                    finally { if (e_3) throw e_3.error; }
+                    finally { if (e_4) throw e_4.error; }
                     return [7 /*endfinally*/];
                 case 8: return [2 /*return*/, Promise.all(results)];
             }
@@ -310,7 +373,7 @@ exports.mapConcurrent = mapConcurrent;
 function workerAll(number_of_workers, iterator_in, asyncFn) {
     return __awaiter(this, void 0, void 0, function () {
         var worker_promises, iterator, i, raw_results, results, raw_results_1, raw_results_1_1, result_array;
-        var e_4, _a;
+        var e_5, _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -329,12 +392,12 @@ function workerAll(number_of_workers, iterator_in, asyncFn) {
                             results = results.concat(result_array);
                         }
                     }
-                    catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                    catch (e_5_1) { e_5 = { error: e_5_1 }; }
                     finally {
                         try {
                             if (raw_results_1_1 && !raw_results_1_1.done && (_a = raw_results_1["return"])) _a.call(raw_results_1);
                         }
-                        finally { if (e_4) throw e_4.error; }
+                        finally { if (e_5) throw e_5.error; }
                     }
                     return [2 /*return*/, results];
             }
@@ -342,6 +405,51 @@ function workerAll(number_of_workers, iterator_in, asyncFn) {
     });
 }
 exports.workerAll = workerAll;
+/**
+ * Use n workers to resolve a function across an async iterable. (via `.mapSeriesAsync`)
+ * Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
+ * if you need to inspect results include some type of id in the return.
+ * `mapConcurrent` should replace this
+ *
+ * @param      {number}                 number_of_workers   - Number of functions to execute
+ * @param      {AsyncIterable.<Any>}    async_iterator      - The iterator of values to use
+ * @param      {Function}               asyncFn             - The async function
+ * @return     {Promise<Array>}                             - Unordered array of resolved values
+ */
+function workerAllAsync(number_of_workers, async_iterator, asyncFn) {
+    return __awaiter(this, void 0, void 0, function () {
+        var worker_promises, i, raw_results, results, raw_results_2, raw_results_2_1, result_array;
+        var e_6, _a;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    worker_promises = [];
+                    for (i = 1; i <= number_of_workers; i++) {
+                        worker_promises.push(mapSeriesAsync(async_iterator, asyncFn));
+                    }
+                    return [4 /*yield*/, Promise.all(worker_promises)];
+                case 1:
+                    raw_results = _b.sent();
+                    results = [];
+                    try {
+                        for (raw_results_2 = __values(raw_results), raw_results_2_1 = raw_results_2.next(); !raw_results_2_1.done; raw_results_2_1 = raw_results_2.next()) {
+                            result_array = raw_results_2_1.value;
+                            results = results.concat(result_array);
+                        }
+                    }
+                    catch (e_6_1) { e_6 = { error: e_6_1 }; }
+                    finally {
+                        try {
+                            if (raw_results_2_1 && !raw_results_2_1.done && (_a = raw_results_2["return"])) _a.call(raw_results_2);
+                        }
+                        finally { if (e_6) throw e_6.error; }
+                    }
+                    return [2 /*return*/, results];
+            }
+        });
+    });
+}
+exports.workerAllAsync = workerAllAsync;
 /**
  * Run a bunch of promises, if the first fails return the next until all promises have been checked.
  * All promises start resolving immediately.
@@ -351,25 +459,25 @@ exports.workerAll = workerAll;
  */
 function firstWithoutError(iterable) {
     return __awaiter(this, void 0, void 0, function () {
-        var promises, iterable_2, iterable_2_1, thenable, promise;
-        var e_5, _a;
+        var promises, iterable_3, iterable_3_1, thenable, promise;
+        var e_7, _a;
         return __generator(this, function (_b) {
             promises = [];
             try {
                 // Start resolving all promises from the iterable
-                for (iterable_2 = __values(iterable), iterable_2_1 = iterable_2.next(); !iterable_2_1.done; iterable_2_1 = iterable_2.next()) {
-                    thenable = iterable_2_1.value;
+                for (iterable_3 = __values(iterable), iterable_3_1 = iterable_3.next(); !iterable_3_1.done; iterable_3_1 = iterable_3.next()) {
+                    thenable = iterable_3_1.value;
                     promise = Promise.resolve(thenable);
                     promises.push(promise);
                     promise["catch"](noop); // ignore rejections for now
                 }
             }
-            catch (e_5_1) { e_5 = { error: e_5_1 }; }
+            catch (e_7_1) { e_7 = { error: e_7_1 }; }
             finally {
                 try {
-                    if (iterable_2_1 && !iterable_2_1.done && (_a = iterable_2["return"])) _a.call(iterable_2);
+                    if (iterable_3_1 && !iterable_3_1.done && (_a = iterable_3["return"])) _a.call(iterable_3);
                 }
-                finally { if (e_5) throw e_5.error; }
+                finally { if (e_7) throw e_7.error; }
             }
             return [2 /*return*/, firstInSeriesWithoutError(promises)];
         });
@@ -404,8 +512,8 @@ exports.AggregateError = AggregateError;
  */
 function firstInSeriesWithoutError(iterable) {
     return __awaiter(this, void 0, void 0, function () {
-        var errors, iterable_3, iterable_3_1, thenable, error_1, e_6_1;
-        var e_6, _a;
+        var errors, iterable_4, iterable_4_1, thenable, error_1, e_8_1;
+        var e_8, _a;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -413,11 +521,11 @@ function firstInSeriesWithoutError(iterable) {
                     _b.label = 1;
                 case 1:
                     _b.trys.push([1, 8, 9, 10]);
-                    iterable_3 = __values(iterable), iterable_3_1 = iterable_3.next();
+                    iterable_4 = __values(iterable), iterable_4_1 = iterable_4.next();
                     _b.label = 2;
                 case 2:
-                    if (!!iterable_3_1.done) return [3 /*break*/, 7];
-                    thenable = iterable_3_1.value;
+                    if (!!iterable_4_1.done) return [3 /*break*/, 7];
+                    thenable = iterable_4_1.value;
                     _b.label = 3;
                 case 3:
                     _b.trys.push([3, 5, , 6]);
@@ -428,18 +536,18 @@ function firstInSeriesWithoutError(iterable) {
                     errors.push(error_1);
                     return [3 /*break*/, 6];
                 case 6:
-                    iterable_3_1 = iterable_3.next();
+                    iterable_4_1 = iterable_4.next();
                     return [3 /*break*/, 2];
                 case 7: return [3 /*break*/, 10];
                 case 8:
-                    e_6_1 = _b.sent();
-                    e_6 = { error: e_6_1 };
+                    e_8_1 = _b.sent();
+                    e_8 = { error: e_8_1 };
                     return [3 /*break*/, 10];
                 case 9:
                     try {
-                        if (iterable_3_1 && !iterable_3_1.done && (_a = iterable_3["return"])) _a.call(iterable_3);
+                        if (iterable_4_1 && !iterable_4_1.done && (_a = iterable_4["return"])) _a.call(iterable_4);
                     }
-                    finally { if (e_6) throw e_6.error; }
+                    finally { if (e_8) throw e_8.error; }
                     return [7 /*endfinally*/];
                 case 10: throw new AggregateError('Series Errors', errors);
             }
@@ -488,20 +596,19 @@ function allProps(obj) {
     });
 }
 exports.allProps = allProps;
-/**
- * Create a promise and return the promise, resolve and reject
- * Allows you to choose whether to resolve/reject something outside the promise scope
- * @returns {Array} - [ promise, resolve, reject ]
- */
+// interface OuterSettleReturn {
+//   promise: PromiseLike<any>
+//   resolve: PromiseResolve
+//   reject: PromiseReject
+// }
 function outerSettle() {
-    // can't find/remember the use case, seems Promise.resolve/reject would do this, unless a function in passed in
     var outerResolve;
     var outerReject;
     var promise = new Promise(function (resolve, reject) {
         outerResolve = resolve;
         outerReject = reject;
     });
-    //return { promise, resolve: outerResolve, reject: outerReject }
+    // return { promise, resolve: outerResolve, reject: outerReject }
     return [promise, outerResolve, outerReject];
 }
 exports.outerSettle = outerSettle;

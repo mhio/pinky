@@ -41,6 +41,14 @@ export declare function map(iterator: Iterable<any>, asyncFn: MapperFunction): P
  */
 export declare function mapSeries(iterable: Iterable<any>, asyncFn: MapperFunction): Promise<any[]>;
 /**
+ * map an async function in series across an async iterable
+ *
+ * @param      {Iterable.<Any>}    iterator     - The iterator
+ * @param      {Function}          asyncFn      - The asynchronous function
+ * @return     {Promise.<Array>}                - Array of all resolved values
+ */
+export declare function mapSeriesAsync(iterable: AsyncIterable<any>, asyncFn: MapperFunction): Promise<any[]>;
+/**
  * map an async function across an iterable with up to N promises
  *
  * @param      {Iterable.<Any>}    iterator     - The iterator
@@ -60,6 +68,18 @@ export declare function mapConcurrent(iterator_in: Iterable<any>, asyncFn: Mappe
  * @return     {Promise<Array>}                 - Unordered array of resolved values
  */
 export declare function workerAll(number_of_workers: number, iterator_in: Iterable<any>, asyncFn: MapperFunction): Promise<any[]>;
+/**
+ * Use n workers to resolve a function across an async iterable. (via `.mapSeriesAsync`)
+ * Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
+ * if you need to inspect results include some type of id in the return.
+ * `mapConcurrent` should replace this
+ *
+ * @param      {number}                 number_of_workers   - Number of functions to execute
+ * @param      {AsyncIterable.<Any>}    async_iterator      - The iterator of values to use
+ * @param      {Function}               asyncFn             - The async function
+ * @return     {Promise<Array>}                             - Unordered array of resolved values
+ */
+export declare function workerAllAsync(number_of_workers: number, async_iterator: AsyncIterable<any>, asyncFn: MapperFunction): Promise<any[]>;
 /**
  * Run a bunch of promises, if the first fails return the next until all promises have been checked.
  * All promises start resolving immediately.
@@ -96,9 +116,11 @@ export declare function allProps(obj: {
 /**
  * Create a promise and return the promise, resolve and reject
  * Allows you to choose whether to resolve/reject something outside the promise scope
- * @returns {Array} - [ promise, resolve, reject ]
  */
-export declare function outerSettle(): any[];
+declare type PromiseResolve = (value: any | PromiseLike<any>) => void;
+declare type PromiseReject = (reason?: any) => void;
+declare type OuterSettleReturn = [PromiseLike<any>, PromiseResolve, PromiseReject];
+export declare function outerSettle(): OuterSettleReturn;
 /**
  * Wait until a timestamp or some condition function to become truthey. Can be an async or standard function
  * @param   {number}    timeout_ms       - The `Date` timestamp to wait until
@@ -117,3 +139,4 @@ export declare function waitFor(timeout_ms: number, condition_fn: BoolOrPromiseB
     count: number;
     result: true;
 }>;
+export {};

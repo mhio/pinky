@@ -1,3 +1,4 @@
+const { Readable } = require('node:stream')
 const chai = require('chai')
 chai.use(require('chai-subset'))
 const { expect } = chai
@@ -9,15 +10,21 @@ const {
   waitFor,
   map,
   mapSeries,
+  mapSeriesAsync,
   mapConcurrent,
-  mapConcurrentViaHash,
   workerAll,
+  workerAllAsync,
   firstInSeriesWithoutError,
   firstWithoutError,
   allProps
 } = require('../../dist/pinky')
+const delay1Ms = (v) => delay(1).then(() => v)
 const delayReturnMs = (v) => delay(v).then(() => v)
 const delayReturnMsEntries = ([,v]) => {
+  if (v === false) throw new Error('false')
+  return delay(v).then(() => v)
+}
+const delayReturnMsAsyncIterable = (v) => {
   if (v === false) throw new Error('false')
   return delay(v).then(() => v)
 }
@@ -56,22 +63,40 @@ describe('test', function(){
   })
 
   it('should mapSeries', async function(){
-    const vals = [30,15,1]
-    const total_vals = sumArray(vals)
+    const values = [30,15,1]
+    const total_values = sumArray(values)
     const start_ts = Date.now()
-    const res = await mapSeries(vals, delayReturnMs)
+    const res = await mapSeries(values, delayReturnMs)
     expect(res).to.eql([30,15,1])
-    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_vals)
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_values)
+  })
+
+  it('should mapSeriesAsync', async function(){
+    const values = Readable.from([30,15,1])
+    const total_values = sumArray([30,15,1])
+    const start_ts = Date.now()
+    const res = await mapSeriesAsync(values, delayReturnMs)
+    expect(res).to.eql([30,15,1])
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_values)
+  })
+
+  it('should mapSeriesAsync', async function(){
+    const values = Readable.from([30,15,1]).map(delay1Ms)
+    const total_values = sumArray([30,15,1])
+    const start_ts = Date.now()
+    const res = await mapSeriesAsync(values, delayReturnMs)
+    expect(res).to.eql([30,15,1])
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_values)
   })
 
   it('should mapConcurrent 1 array', async function(){
-    const vals = [30,15,1,29,2]
-    const total_vals = sumArray(vals)
+    const values = [30,15,1,29,2]
+    const total_values = sumArray(values)
     const start_ts = Date.now()
-    const res = await mapConcurrent(vals, delayReturnMs, 1)
-    expect(res).to.eql(vals)
+    const res = await mapConcurrent(values, delayReturnMs, 1)
+    expect(res).to.eql(values)
     // seen this fail once with 76ms instead of 77+. Maybe during a time adjust?
-    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_vals)
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_values)
   })
 
   it('should mapConcurrent 2 array', async function(){
@@ -116,6 +141,40 @@ describe('test', function(){
   it('should bail workers', async function(){
     try {
       await workerAll(3, [5,5,5,false,2,3].entries(), delayReturnMsEntries)
+    }
+    catch (error){
+      expect(error.message).to.eql('false')
+    }
+  })
+
+  it('should workerAllAsync plain iterable workers 2', async function(){
+    const iterable = [25,20,5,1,35].entries()
+    const res = await workerAllAsync(2, iterable, delayReturnMsEntries)
+    expect(res).to.containSubset([25,20,5,1,35])
+  })
+
+  it('should workerAllAsync async workers 2', async function(){
+    const async_iterable = Readable.from([25,20,5,1,35]).map(delay1Ms)
+    const res = await workerAllAsync(2, async_iterable, delayReturnMsAsyncIterable)
+    expect(res).to.containSubset([25,20,5,1,35])
+  })
+
+  it('should workerAllAsync async workers 3', async function(){
+    const async_iterable = Readable.from([10,10,10,1,2,3])
+    const res = await workerAllAsync(3, async_iterable, delayReturnMsAsyncIterable)
+    expect(res).to.containSubset([10,10,10,1,2,3])
+  })
+
+  it('should workerAllAsync async more workers than data', async function(){
+    const async_iterable = Readable.from([10,9,8])
+    const res = await workerAllAsync(6, async_iterable, delayReturnMsAsyncIterable)
+    expect(res).to.containSubset([10,9,8])
+  })
+
+  it('should bail async workers', async function(){
+    const async_iterable = Readable.from([5,5,5,false,2,3])
+    try {
+      await workerAllAsync(3, async_iterable, delayReturnMsAsyncIterable)
     }
     catch (error){
       expect(error.message).to.eql('false')
