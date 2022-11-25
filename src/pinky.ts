@@ -202,7 +202,7 @@ export async function workerAllAsync(number_of_workers: number, async_iterator: 
  * All promises start resolving immediately. 
  *
  * @param      {Iterable.<Promise>}   iterable  The iterable
- * @return     {Promise}  { description_of_the_return_value }
+ * @return     {Promise<any>}
  */
 export async function firstWithoutError(iterable: Iterable<Promise<any>>) {
   const promises: Promise<any>[] = []
@@ -234,7 +234,7 @@ export class AggregateError extends Error {
  * Run a bunch of promises in series, if the one fails move onto the next. 
  *
  * @param      {Iterable.<Promise>}   iterable  The iterable
- * @return     {Promise}  { description_of_the_return_value }
+ * @return     {Promise<any>}
  */
 export async function firstInSeriesWithoutError(iterable: Iterable<Promise<any>>) {
   const errors: Error[] = []
@@ -269,10 +269,6 @@ export async function allProps(obj: { [key: string]: Promise<any> }){
 }
 
 
-/**
- * Create a promise and return the promise, resolve and reject
- * Allows you to choose whether to resolve/reject something outside the promise scope
- */
 type PromiseResolve = (value: any | PromiseLike<any>) => void
 type PromiseReject = (reason?: any) => void
 type OuterSettleReturn = [ PromiseLike<any>, PromiseResolve, PromiseReject]
@@ -281,6 +277,11 @@ type OuterSettleReturn = [ PromiseLike<any>, PromiseResolve, PromiseReject]
 //   resolve: PromiseResolve
 //   reject: PromiseReject
 // }
+/**
+ * Create a promise and return the promise, resolve and reject
+ * Allows you to choose whether to resolve/reject something outside the promise scope
+ * @returns {OuterSettleReturn}
+ */
 export function outerSettle(): OuterSettleReturn {
   let outerResolve!: PromiseResolve
   let outerReject!: PromiseReject

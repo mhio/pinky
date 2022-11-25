@@ -66,7 +66,9 @@ node_modules/@types/node/globals.d.ts:4
 
 Optional override for formatting stack traces
 
-**`see`** https://v8.dev/docs/stack-trace-api#customizing-stack-traces
+**`See`**
+
+https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
 ##### Parameters
 
@@ -109,7 +111,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:228](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L228)
+[src/pinky.ts:226](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L226)
 
 ___
 
@@ -123,7 +125,7 @@ Error.message
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1023
+node_modules/typescript/lib/lib.es5.d.ts:1054
 
 ___
 
@@ -137,7 +139,7 @@ Error.name
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1022
+node_modules/typescript/lib/lib.es5.d.ts:1053
 
 ___
 
@@ -151,7 +153,7 @@ Error.stack
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1024
+node_modules/typescript/lib/lib.es5.d.ts:1055
 
 ## Constructors
 
@@ -172,4 +174,4 @@ Error.constructor
 
 #### Defined in
 
-[src/pinky.ts:229](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L229)
+[src/pinky.ts:227](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L227)

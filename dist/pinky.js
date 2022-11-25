@@ -29,7 +29,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -240,49 +240,57 @@ exports.mapSeries = mapSeries;
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
 function mapSeriesAsync(iterable, asyncFn) {
-    var iterable_2, iterable_2_1;
-    var e_3, _a;
+    var _a, iterable_2, iterable_2_1;
+    var _b, e_3, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
-        var results, i, e, _b, _c, e_3_1;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
+        var results, i, e, _e, _f, e_3_1;
+        return __generator(this, function (_g) {
+            switch (_g.label) {
                 case 0:
                     results = [];
                     i = 0;
-                    _d.label = 1;
+                    _g.label = 1;
                 case 1:
-                    _d.trys.push([1, 7, 8, 13]);
-                    iterable_2 = __asyncValues(iterable);
-                    _d.label = 2;
+                    _g.trys.push([1, 9, 10, 15]);
+                    _a = true, iterable_2 = __asyncValues(iterable);
+                    _g.label = 2;
                 case 2: return [4 /*yield*/, iterable_2.next()];
                 case 3:
-                    if (!(iterable_2_1 = _d.sent(), !iterable_2_1.done)) return [3 /*break*/, 6];
-                    e = iterable_2_1.value;
-                    _c = (_b = results).push;
-                    return [4 /*yield*/, asyncFn(e, i)];
+                    if (!(iterable_2_1 = _g.sent(), _b = iterable_2_1.done, !_b)) return [3 /*break*/, 8];
+                    _d = iterable_2_1.value;
+                    _a = false;
+                    _g.label = 4;
                 case 4:
-                    _c.apply(_b, [_d.sent()]);
+                    _g.trys.push([4, , 6, 7]);
+                    e = _d;
+                    _f = (_e = results).push;
+                    return [4 /*yield*/, asyncFn(e, i)];
+                case 5:
+                    _f.apply(_e, [_g.sent()]);
                     i++;
-                    _d.label = 5;
-                case 5: return [3 /*break*/, 2];
-                case 6: return [3 /*break*/, 13];
-                case 7:
-                    e_3_1 = _d.sent();
-                    e_3 = { error: e_3_1 };
-                    return [3 /*break*/, 13];
-                case 8:
-                    _d.trys.push([8, , 11, 12]);
-                    if (!(iterable_2_1 && !iterable_2_1.done && (_a = iterable_2["return"]))) return [3 /*break*/, 10];
-                    return [4 /*yield*/, _a.call(iterable_2)];
+                    return [3 /*break*/, 7];
+                case 6:
+                    _a = true;
+                    return [7 /*endfinally*/];
+                case 7: return [3 /*break*/, 2];
+                case 8: return [3 /*break*/, 15];
                 case 9:
-                    _d.sent();
-                    _d.label = 10;
-                case 10: return [3 /*break*/, 12];
+                    e_3_1 = _g.sent();
+                    e_3 = { error: e_3_1 };
+                    return [3 /*break*/, 15];
+                case 10:
+                    _g.trys.push([10, , 13, 14]);
+                    if (!(!_a && !_b && (_c = iterable_2["return"]))) return [3 /*break*/, 12];
+                    return [4 /*yield*/, _c.call(iterable_2)];
                 case 11:
+                    _g.sent();
+                    _g.label = 12;
+                case 12: return [3 /*break*/, 14];
+                case 13:
                     if (e_3) throw e_3.error;
                     return [7 /*endfinally*/];
-                case 12: return [7 /*endfinally*/];
-                case 13: return [2 /*return*/, results];
+                case 14: return [7 /*endfinally*/];
+                case 15: return [2 /*return*/, results];
             }
         });
     });
@@ -455,7 +463,7 @@ exports.workerAllAsync = workerAllAsync;
  * All promises start resolving immediately.
  *
  * @param      {Iterable.<Promise>}   iterable  The iterable
- * @return     {Promise}  { description_of_the_return_value }
+ * @return     {Promise<any>}
  */
 function firstWithoutError(iterable) {
     return __awaiter(this, void 0, void 0, function () {
@@ -508,7 +516,7 @@ exports.AggregateError = AggregateError;
  * Run a bunch of promises in series, if the one fails move onto the next.
  *
  * @param      {Iterable.<Promise>}   iterable  The iterable
- * @return     {Promise}  { description_of_the_return_value }
+ * @return     {Promise<any>}
  */
 function firstInSeriesWithoutError(iterable) {
     return __awaiter(this, void 0, void 0, function () {
@@ -562,9 +570,9 @@ exports.firstInSeriesWithoutError = firstInSeriesWithoutError;
  */
 function allProps(obj) {
     return __awaiter(this, void 0, void 0, function () {
-        var promises, key, promise, results, _a, _b, _i, key, _c, _d;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
+        var promises, key, promise, results, _a, _b, _c, _i, key, _d, _e;
+        return __generator(this, function (_f) {
+            switch (_f.label) {
                 case 0:
                     promises = {};
                     for (key in obj) {
@@ -573,20 +581,23 @@ function allProps(obj) {
                         promise["catch"](noop); // ignore rejections for now
                     }
                     results = {};
-                    _a = [];
-                    for (_b in promises)
-                        _a.push(_b);
+                    _a = promises;
+                    _b = [];
+                    for (_c in _a)
+                        _b.push(_c);
                     _i = 0;
-                    _e.label = 1;
+                    _f.label = 1;
                 case 1:
-                    if (!(_i < _a.length)) return [3 /*break*/, 4];
-                    key = _a[_i];
-                    _c = results;
-                    _d = key;
+                    if (!(_i < _b.length)) return [3 /*break*/, 4];
+                    _c = _b[_i];
+                    if (!(_c in _a)) return [3 /*break*/, 3];
+                    key = _c;
+                    _d = results;
+                    _e = key;
                     return [4 /*yield*/, promises[key]];
                 case 2:
-                    _c[_d] = _e.sent();
-                    _e.label = 3;
+                    _d[_e] = _f.sent();
+                    _f.label = 3;
                 case 3:
                     _i++;
                     return [3 /*break*/, 1];
@@ -601,6 +612,11 @@ exports.allProps = allProps;
 //   resolve: PromiseResolve
 //   reject: PromiseReject
 // }
+/**
+ * Create a promise and return the promise, resolve and reject
+ * Allows you to choose whether to resolve/reject something outside the promise scope
+ * @returns {OuterSettleReturn}
+ */
 function outerSettle() {
     var outerResolve;
     var outerReject;

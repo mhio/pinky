@@ -1,5 +1,5 @@
-export declare type MapperFunction = (element: any, index?: any) => any;
-export declare type BoolOrPromiseBoolFunction = () => boolean | Promise<boolean>;
+export type MapperFunction = (element: any, index?: any) => any;
+export type BoolOrPromiseBoolFunction = () => boolean | Promise<boolean>;
 export declare function noop(): void;
 /**
  * delay for ms
@@ -85,7 +85,7 @@ export declare function workerAllAsync(number_of_workers: number, async_iterator
  * All promises start resolving immediately.
  *
  * @param      {Iterable.<Promise>}   iterable  The iterable
- * @return     {Promise}  { description_of_the_return_value }
+ * @return     {Promise<any>}
  */
 export declare function firstWithoutError(iterable: Iterable<Promise<any>>): Promise<any>;
 export declare class DetailsError extends Error {
@@ -100,7 +100,7 @@ export declare class AggregateError extends Error {
  * Run a bunch of promises in series, if the one fails move onto the next.
  *
  * @param      {Iterable.<Promise>}   iterable  The iterable
- * @return     {Promise}  { description_of_the_return_value }
+ * @return     {Promise<any>}
  */
 export declare function firstInSeriesWithoutError(iterable: Iterable<Promise<any>>): Promise<any>;
 /**
@@ -113,13 +113,14 @@ export declare function allProps(obj: {
 }): Promise<{
     [key: string]: any;
 }>;
+type PromiseResolve = (value: any | PromiseLike<any>) => void;
+type PromiseReject = (reason?: any) => void;
+type OuterSettleReturn = [PromiseLike<any>, PromiseResolve, PromiseReject];
 /**
  * Create a promise and return the promise, resolve and reject
  * Allows you to choose whether to resolve/reject something outside the promise scope
+ * @returns {OuterSettleReturn}
  */
-declare type PromiseResolve = (value: any | PromiseLike<any>) => void;
-declare type PromiseReject = (reason?: any) => void;
-declare type OuterSettleReturn = [PromiseLike<any>, PromiseResolve, PromiseReject];
 export declare function outerSettle(): OuterSettleReturn;
 /**
  * Wait until a timestamp or some condition function to become truthey. Can be an async or standard function

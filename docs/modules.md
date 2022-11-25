@@ -9,7 +9,7 @@
 - [AggregateError](classes/AggregateError.md)
 - [DetailsError](classes/DetailsError.md)
 
-### Type aliases
+### Type Aliases
 
 - [BoolOrPromiseBoolFunction](modules.md#boolorpromiseboolfunction)
 - [MapperFunction](modules.md#mapperfunction)
@@ -32,7 +32,7 @@
 - [workerAll](modules.md#workerall)
 - [workerAllAsync](modules.md#workerallasync)
 
-## Type aliases
+## Type Aliases
 
 ### BoolOrPromiseBoolFunction
 
@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[src/pinky.ts:3](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L3)
+[src/pinky.ts:3](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L3)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:2](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L2)
+[src/pinky.ts:2](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L2)
 
 ## Functions
 
@@ -97,7 +97,7 @@ obj     - New object of resolved promise properties
 
 #### Defined in
 
-[src/pinky.ts:259](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L259)
+[src/pinky.ts:257](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L257)
 
 ___
 
@@ -119,7 +119,7 @@ delay for ms
 
 #### Defined in
 
-[src/pinky.ts:15](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L15)
+[src/pinky.ts:15](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L15)
 
 ___
 
@@ -142,7 +142,7 @@ Delay from a timestamp for milliseconds
 
 #### Defined in
 
-[src/pinky.ts:48](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L48)
+[src/pinky.ts:48](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L48)
 
 ___
 
@@ -164,7 +164,7 @@ Delay until a timestamp milliseconds
 
 #### Defined in
 
-[src/pinky.ts:63](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L63)
+[src/pinky.ts:63](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L63)
 
 ___
 
@@ -184,11 +184,9 @@ Run a bunch of promises in series, if the one fails move onto the next.
 
 `Promise`<`any`\>
 
-{ description_of_the_return_value }
-
 #### Defined in
 
-[src/pinky.ts:241](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L241)
+[src/pinky.ts:239](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L239)
 
 ___
 
@@ -196,7 +194,7 @@ ___
 
 ▸ **firstWithoutError**(`iterable`): `Promise`<`any`\>
 
-Run a bunch of promises, if the first fails return the next until all promises have been checked.
+Run a bunch of promises, if the first fails return the next until all promises have been checked. 
 All promises start resolving immediately.
 
 #### Parameters
@@ -209,11 +207,9 @@ All promises start resolving immediately.
 
 `Promise`<`any`\>
 
-{ description_of_the_return_value }
-
 #### Defined in
 
-[src/pinky.ts:209](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L209)
+[src/pinky.ts:207](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L207)
 
 ___
 
@@ -238,7 +234,7 @@ Array of resolved promises
 
 #### Defined in
 
-[src/pinky.ts:74](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L74)
+[src/pinky.ts:74](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L74)
 
 ___
 
@@ -264,7 +260,7 @@ map an async function across an iterable with up to N promises
 
 #### Defined in
 
-[src/pinky.ts:126](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L126)
+[src/pinky.ts:126](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L126)
 
 ___
 
@@ -289,7 +285,7 @@ map an async function in series across an iterable
 
 #### Defined in
 
-[src/pinky.ts:91](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L91)
+[src/pinky.ts:91](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L91)
 
 ___
 
@@ -314,7 +310,7 @@ map an async function in series across an async iterable
 
 #### Defined in
 
-[src/pinky.ts:108](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L108)
+[src/pinky.ts:108](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L108)
 
 ___
 
@@ -328,7 +324,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:6](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L6)
+[src/pinky.ts:6](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L6)
 
 ___
 
@@ -336,13 +332,16 @@ ___
 
 ▸ **outerSettle**(): `OuterSettleReturn`
 
+Create a promise and return the promise, resolve and reject
+Allows you to choose whether to resolve/reject something outside the promise scope
+
 #### Returns
 
 `OuterSettleReturn`
 
 #### Defined in
 
-[src/pinky.ts:286](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L286)
+[src/pinky.ts:285](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L285)
 
 ___
 
@@ -352,7 +351,7 @@ ___
 
 Wait until a timestamp or some condition function to become truthey. Can be an async or standard function
 
-**`throws`** {Error}
+**`Throws`**
 
 #### Parameters
 
@@ -370,7 +369,7 @@ Wait until a timestamp or some condition function to become truthey. Can be an a
 
 #### Defined in
 
-[src/pinky.ts:307](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L307)
+[src/pinky.ts:306](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L306)
 
 ___
 
@@ -399,13 +398,13 @@ if you need to inspect results include some type of id in the return.
 
 #### Defined in
 
-[src/pinky.ts:158](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L158)
+[src/pinky.ts:158](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L158)
 
 ___
 
 ### workerAllAsync
 
-▸ **workerAllAsync**(`number_of_workers`, `iterator_in`, `asyncFn`): `Promise`<`any`[]\>
+▸ **workerAllAsync**(`number_of_workers`, `async_iterator`, `asyncFn`): `Promise`<`any`[]\>
 
 Use n workers to resolve a function across an async iterable. (via `.mapSeriesAsync`)
 Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
@@ -417,7 +416,7 @@ if you need to inspect results include some type of id in the return.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `number_of_workers` | `number` | Number of functions to execute |
-| `iterator_in` | `AsyncIterable`<`any`\> | The iterator of values to use |
+| `async_iterator` | `AsyncIterable`<`any`\> | The iterator of values to use |
 | `asyncFn` | [`MapperFunction`](modules.md#mapperfunction) | The async function |
 
 #### Returns
@@ -428,4 +427,4 @@ if you need to inspect results include some type of id in the return.
 
 #### Defined in
 
-[src/pinky.ts:184](https://github.com/mhio/pinky/blob/66b8c7d/src/pinky.ts#L184)
+[src/pinky.ts:184](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L184)
