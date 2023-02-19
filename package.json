@@ -1,6 +1,6 @@
 {
   "name": "@mhio/pinky",
-  "version": "0.7.1-0",
+  "version": "0.7.1",
   "main": "dist/pinky.js",
   "license": "MIT",
   "scripts": {
@@ -18,7 +18,7 @@
     "release:test": "set -uex; yarn test; npm version prerelease; npm publish --access public --tag testing",
     "release:patch": "set -uex; git pull; rm -rf node_modules; yarn; yarn run test:coverage; yarn run test:lint; yarn run build:ts; npm version patch; git push; npm publish --access public; git push --tags",
     "watch": "nodemon -w dist -i test/output/ -x",
-    "watch:src": "nodemon -e js,ts,json -i dist -i test/output/ -x 'yarn build:ts && \"$@\"'" 
+    "watch:src": "nodemon -e js,ts,json -i dist -i test/output/ -x 'yarn build:ts && \"$@\"'"
   },
   "devDependencies": {
     "@types/node": "^18",
