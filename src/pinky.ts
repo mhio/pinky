@@ -284,7 +284,7 @@ type OuterSettleReturn = [ PromiseLike<any>, PromiseResolve, PromiseReject]
 //   reject: PromiseReject
 // }
 /**
- * Create a promise and return the promise, resolve and reject
+ * Create a promise and return the promise object, resolve and reject
  * Allows you to choose whether to resolve/reject something outside the promise scope
  * @returns {OuterSettleReturn}
  */
