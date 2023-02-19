@@ -1,8 +1,16 @@
 {
   "name": "@mhio/pinky",
-  "version": "0.7.1",
+  "version": "0.8.0-0",
   "main": "dist/pinky.js",
   "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "dist/pinky.d.ts",
+      "require": "dist/cjs/pinky.js",
+      "import": "dist/esm/pinky.js",
+      "default": "dist/esm/pinky.js"
+    }
+  },
   "scripts": {
     "test": "mocha test/unit test/int",
     "test:unit": "mocha test/unit",

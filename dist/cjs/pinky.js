@@ -1,3 +1,4 @@
+"use strict";
 var __asyncValues = (this && this.__asyncValues) || function (o) {
     if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
     var m = o[Symbol.asyncIterator], i;
@@ -5,20 +6,24 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.waitFor = exports.outerSettle = exports.allProps = exports.firstInSeriesWithoutError = exports.AggregateError = exports.DetailsError = exports.firstWithoutError = exports.workerAllAsync = exports.workerAll = exports.mapConcurrent = exports.mapSeriesAsync = exports.mapSeries = exports.map = exports.delayTo = exports.delayFrom = exports.delay = exports.noop = void 0;
 //export function noop(...args: any[]) : any {
-export function noop() {
+function noop() {
     // do nothing.
 }
+exports.noop = noop;
 /**
  * delay for ms
  * @param ms The milliseconds to delay for
  * @returns
  */
-export function delay(ms) {
+function delay(ms) {
     return new Promise(function (ok) {
         setTimeout(ok, ms);
     });
 }
+exports.delay = delay;
 /**
  * delay for ms
  * @param      {Number}           ms            - The milliseconds to delay for
@@ -45,7 +50,7 @@ export function delay(ms) {
  * @param      {Number}           ms            - The milliseconds to delay for
  * @return     {Promise}
  */
-export async function delayFrom(ts, ms) {
+async function delayFrom(ts, ms) {
     const delay_so_far = Date.now() - ts;
     // Already done, all good
     if (delay_so_far > ms)
@@ -57,23 +62,25 @@ export async function delayFrom(ts, ms) {
     else
         return delay(ms);
 }
+exports.delayFrom = delayFrom;
 /**
  * Delay until a timestamp milliseconds
  * @param      {Number}           ts            - The millisecond `Date` timestamp to start the delay from
  * @return     {Promise}
  */
-export async function delayTo(ts) {
+async function delayTo(ts) {
     const delay_left = ts - Date.now();
     if (delay_left > 1)
         return delay(delay_left);
 }
+exports.delayTo = delayTo;
 /**
  * map an async function across an iterable
  * @param iterator
  * @param asyncFn
  * @returns Array of resolved promises
  */
-export async function map(iterator, asyncFn) {
+async function map(iterator, asyncFn) {
     const results = [];
     let i = 0;
     for (const e of iterator) {
@@ -82,6 +89,7 @@ export async function map(iterator, asyncFn) {
     }
     return Promise.all(results);
 }
+exports.map = map;
 /**
  * map an async function in series across an iterable
  *
@@ -89,7 +97,7 @@ export async function map(iterator, asyncFn) {
  * @param      {Function}          asyncFn      - The asynchronous function
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
-export async function mapSeries(iterable, asyncFn) {
+async function mapSeries(iterable, asyncFn) {
     const results = [];
     let i = 0;
     for (const e of iterable) {
@@ -98,6 +106,7 @@ export async function mapSeries(iterable, asyncFn) {
     }
     return results;
 }
+exports.mapSeries = mapSeries;
 /**
  * map an async function in series across an async iterable
  *
@@ -105,7 +114,7 @@ export async function mapSeries(iterable, asyncFn) {
  * @param      {Function}          asyncFn      - The asynchronous function
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
-export async function mapSeriesAsync(iterable, asyncFn) {
+async function mapSeriesAsync(iterable, asyncFn) {
     var _a, e_1, _b, _c;
     const results = [];
     let i = 0;
@@ -132,6 +141,7 @@ export async function mapSeriesAsync(iterable, asyncFn) {
     }
     return results;
 }
+exports.mapSeriesAsync = mapSeriesAsync;
 /**
  * map an async function across an iterable with up to N promises
  * All promises will resolve,
@@ -140,7 +150,7 @@ export async function mapSeriesAsync(iterable, asyncFn) {
  * @param      {Function}          asyncFn      - The asynchronous function
  * @return     {Promise.<Array>}                - Array of all resolved values
  */
-export async function mapConcurrent(iterator_in, asyncFn, worker_count) {
+async function mapConcurrent(iterator_in, asyncFn, worker_count) {
     const results = [];
     const running = new Map();
     let count = 0;
@@ -161,6 +171,7 @@ export async function mapConcurrent(iterator_in, asyncFn, worker_count) {
     // this should probably be allSettled, all promises have resolved due to the loop ignoring errors. 
     return Promise.all(results);
 }
+exports.mapConcurrent = mapConcurrent;
 /**
  * Use n workers to resolve a function across an iterable. (via `.mapSeries`)
  * Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
@@ -172,7 +183,7 @@ export async function mapConcurrent(iterator_in, asyncFn, worker_count) {
  * @param      {Function}  asyncFn             - The async function
  * @return     {Promise<Array>}                 - Unordered array of resolved values
  */
-export async function workerAll(number_of_workers, iterator_in, asyncFn) {
+async function workerAll(number_of_workers, iterator_in, asyncFn) {
     const worker_promises = [];
     // const iterator = (iterator_in.entries) ? iterator_in.entries() : iterator_in
     const iterator = iterator_in;
@@ -186,6 +197,7 @@ export async function workerAll(number_of_workers, iterator_in, asyncFn) {
     }
     return results;
 }
+exports.workerAll = workerAll;
 /**
  * Use n workers to resolve a function across an async iterable. (via `.mapSeriesAsync`)
  * Results array is grouped by worker, then the order a worker iterated in, so doesn't match the initial array order.
@@ -197,7 +209,7 @@ export async function workerAll(number_of_workers, iterator_in, asyncFn) {
  * @param      {Function}               asyncFn             - The async function
  * @return     {Promise<Array>}                             - Unordered array of resolved values
  */
-export async function workerAllAsync(number_of_workers, async_iterator, asyncFn) {
+async function workerAllAsync(number_of_workers, async_iterator, asyncFn) {
     const worker_promises = [];
     for (let i = 1; i <= number_of_workers; i++) {
         worker_promises.push(mapSeriesAsync(async_iterator, asyncFn));
@@ -209,6 +221,7 @@ export async function workerAllAsync(number_of_workers, async_iterator, asyncFn)
     }
     return results;
 }
+exports.workerAllAsync = workerAllAsync;
 /**
  * Run a bunch of promises, if the first fails return the next until all promises have been checked.
  * All promises start resolving immediately.
@@ -216,7 +229,7 @@ export async function workerAllAsync(number_of_workers, async_iterator, asyncFn)
  * @param      {Iterable.<Promise>}   iterable  The iterable
  * @return     {Promise<any>}
  */
-export async function firstWithoutError(iterable) {
+async function firstWithoutError(iterable) {
     const promises = [];
     // Start resolving all promises from the iterable
     for (const thenable of iterable) {
@@ -226,25 +239,28 @@ export async function firstWithoutError(iterable) {
     }
     return firstInSeriesWithoutError(promises);
 }
-export class DetailsError extends Error {
+exports.firstWithoutError = firstWithoutError;
+class DetailsError extends Error {
     constructor(message, details) {
         super(message);
         this.details = details;
     }
 }
-export class AggregateError extends Error {
+exports.DetailsError = DetailsError;
+class AggregateError extends Error {
     constructor(message, errors) {
         super(message);
         this.errors = errors;
     }
 }
+exports.AggregateError = AggregateError;
 /**
  * Run a bunch of promises in series, if the one fails move onto the next.
  *
  * @param      {Iterable.<Promise>}   iterable  The iterable
  * @return     {Promise<any>}
  */
-export async function firstInSeriesWithoutError(iterable) {
+async function firstInSeriesWithoutError(iterable) {
     const errors = [];
     for (const thenable of iterable) {
         try {
@@ -256,12 +272,13 @@ export async function firstInSeriesWithoutError(iterable) {
     }
     throw new AggregateError('Series Errors', errors);
 }
+exports.firstInSeriesWithoutError = firstInSeriesWithoutError;
 /**
  * Resolve all promises in an object
  * @param     {object}    obj     - The object to resolve properties of
  * @return    {object}    obj     - New object of resolved promise properties
  */
-export async function allProps(obj) {
+async function allProps(obj) {
     const promises = {};
     for (const key in obj) {
         const promise = Promise.resolve(obj[key]);
@@ -274,6 +291,7 @@ export async function allProps(obj) {
     }
     return results;
 }
+exports.allProps = allProps;
 // interface OuterSettleReturn {
 //   promise: PromiseLike<any>
 //   resolve: PromiseResolve
@@ -284,7 +302,7 @@ export async function allProps(obj) {
  * Allows you to choose whether to resolve/reject something outside the promise scope
  * @returns {OuterSettleReturn}
  */
-export function outerSettle() {
+function outerSettle() {
     let outerResolve;
     let outerReject;
     const promise = new Promise(function (resolve, reject) {
@@ -294,6 +312,7 @@ export function outerSettle() {
     // return { promise, resolve: outerResolve, reject: outerReject }
     return [promise, outerResolve, outerReject];
 }
+exports.outerSettle = outerSettle;
 /**
  * Wait until a timestamp or some condition function to become truthey. Can be an async or standard function
  * @param   {number}    timeout_ms       - The `Date` timestamp to wait until
@@ -304,7 +323,7 @@ export function outerSettle() {
  * @returns {object}
  * @throws  {Error}
  */
-export async function waitFor(timeout_ms, condition_fn, { wait_ms = 1000, label = 'condition' /*backoff = 'linear'*/ } = {}) {
+async function waitFor(timeout_ms, condition_fn, { wait_ms = 1000, label = 'condition' /*backoff = 'linear'*/ } = {}) {
     let count = 0;
     const start = Date.now();
     const timeout = start + timeout_ms;
@@ -320,3 +339,4 @@ export async function waitFor(timeout_ms, condition_fn, { wait_ms = 1000, label 
         wait_ms, label, timeout_ms, condition_fn,
     });
 }
+exports.waitFor = waitFor;
