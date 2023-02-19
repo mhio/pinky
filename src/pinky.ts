@@ -117,6 +117,7 @@ export async function mapSeriesAsync(iterable: AsyncIterable<any>, asyncFn: Mapp
 
 /**
  * map an async function across an iterable with up to N promises
+ * All promises will resolve, 
  *
  * @param      {Iterable.<Any>}    iterator     - The iterator
  * @param      {Function}          asyncFn      - The asynchronous function
@@ -125,21 +126,26 @@ export async function mapSeriesAsync(iterable: AsyncIterable<any>, asyncFn: Mapp
 
 export async function mapConcurrent(iterator_in: Iterable<any>, asyncFn: MapperFunction, worker_count: number) : Promise<any[]>{
   const results: Promise<any>[] = []
-  const running: Promise<any>[] = []
+  const running: Map<number,Promise<number>> = new Map()
   let count = 0
   for (const item of iterator_in) {
     const p_index = count
     const p = asyncFn(item, p_index)
     results.push(p)
-    const fn = function mapConcurrentRunningResolver () { return p_index }
-    running.push(p.then(fn, fn))
-
-    if (running.length >= worker_count) {
-      const j = await Promise.race(running)
-      running.splice(j, 1)
+    
+    // Now track the running promises
+    const mapConcurrentRunningResolver = (): number => p_index
+    running.set(p_index, p.then(mapConcurrentRunningResolver, mapConcurrentRunningResolver))
+    if (running.size >= worker_count) {
+      running.delete(await Promise.race(running.values()))
     }
+  
+    // Continue on
     count++
   }
+  // Might need to check the rest of running here
+
+  // this should probably be allSettled, all promises have resolved due to the loop ignoring errors. 
   return Promise.all(results);
 }
 

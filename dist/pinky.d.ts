@@ -50,6 +50,7 @@ export declare function mapSeries(iterable: Iterable<any>, asyncFn: MapperFuncti
 export declare function mapSeriesAsync(iterable: AsyncIterable<any>, asyncFn: MapperFunction): Promise<any[]>;
 /**
  * map an async function across an iterable with up to N promises
+ * All promises will resolve,
  *
  * @param      {Iterable.<Any>}    iterator     - The iterator
  * @param      {Function}          asyncFn      - The asynchronous function

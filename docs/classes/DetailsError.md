@@ -111,7 +111,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:219](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L219)
+[src/pinky.ts:226](https://github.com/mhio/pinky/blob/00f0f16/src/pinky.ts#L226)
 
 ___
 
@@ -174,4 +174,4 @@ Error.constructor
 
 #### Defined in
 
-[src/pinky.ts:220](https://github.com/mhio/pinky/blob/a623173/src/pinky.ts#L220)
+[src/pinky.ts:227](https://github.com/mhio/pinky/blob/00f0f16/src/pinky.ts#L227)

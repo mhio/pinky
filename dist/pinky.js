@@ -298,6 +298,7 @@ function mapSeriesAsync(iterable, asyncFn) {
 exports.mapSeriesAsync = mapSeriesAsync;
 /**
  * map an async function across an iterable with up to N promises
+ * All promises will resolve,
  *
  * @param      {Iterable.<Any>}    iterator     - The iterator
  * @param      {Function}          asyncFn      - The asynchronous function
@@ -311,25 +312,26 @@ function mapConcurrent(iterator_in, asyncFn, worker_count) {
             switch (_b.label) {
                 case 0:
                     results = [];
-                    running = [];
+                    running = new Map();
                     count = 0;
                     _loop_1 = function (item) {
-                        var p_index, p, fn, j;
-                        return __generator(this, function (_c) {
-                            switch (_c.label) {
+                        var p_index, p, mapConcurrentRunningResolver, _c, _d;
+                        return __generator(this, function (_e) {
+                            switch (_e.label) {
                                 case 0:
                                     p_index = count;
                                     p = asyncFn(item, p_index);
                                     results.push(p);
-                                    fn = function mapConcurrentRunningResolver() { return p_index; };
-                                    running.push(p.then(fn, fn));
-                                    if (!(running.length >= worker_count)) return [3 /*break*/, 2];
-                                    return [4 /*yield*/, Promise.race(running)];
+                                    mapConcurrentRunningResolver = function () { return p_index; };
+                                    running.set(p_index, p.then(mapConcurrentRunningResolver, mapConcurrentRunningResolver));
+                                    if (!(running.size >= worker_count)) return [3 /*break*/, 2];
+                                    _d = (_c = running)["delete"];
+                                    return [4 /*yield*/, Promise.race(running.values())];
                                 case 1:
-                                    j = _c.sent();
-                                    running.splice(j, 1);
-                                    _c.label = 2;
+                                    _d.apply(_c, [_e.sent()]);
+                                    _e.label = 2;
                                 case 2:
+                                    // Continue on
                                     count++;
                                     return [2 /*return*/];
                             }
@@ -361,7 +363,10 @@ function mapConcurrent(iterator_in, asyncFn, worker_count) {
                     }
                     finally { if (e_4) throw e_4.error; }
                     return [7 /*endfinally*/];
-                case 8: return [2 /*return*/, Promise.all(results)];
+                case 8: 
+                // Might need to check the rest of running here
+                // this should probably be allSettled, all promises have resolved due to the loop ignoring errors. 
+                return [2 /*return*/, Promise.all(results)];
             }
         });
     });

@@ -20,13 +20,21 @@ const {
 } = require('../../dist/pinky')
 const delay1Ms = (v) => delay(1).then(() => v)
 const delayReturnMs = (v) => delay(v).then(() => v)
+const delayReturnMsReject = (v) => {
+  if (v === false) return Promise.reject(new Error('false'))
+  return delay(v).then(() => v)
+}
+const delayReturnMsError = (v) => {
+  if (v === false) throw new Error('false')
+  return delayReturnMs(v)
+}
 const delayReturnMsEntries = ([,v]) => {
   if (v === false) throw new Error('false')
-  return delay(v).then(() => v)
+  return delayReturnMs(v)
 }
 const delayReturnMsAsyncIterable = (v) => {
   if (v === false) throw new Error('false')
-  return delay(v).then(() => v)
+  return delayReturnMs(v)
 }
 const sumArray = (arr) => arr.reduce((a, i) => a + i, 0)
 const maxArray = (arr) => arr.reduce((a, i) => (i > a) ? i : a, 0)
@@ -68,7 +76,7 @@ describe('test', function(){
     const start_ts = Date.now()
     const res = await mapSeries(values, delayReturnMs)
     expect(res).to.eql([30,15,1])
-    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_values)
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_values) // node timer is time traveller
   })
 
   it('should mapSeriesAsync', async function(){
@@ -95,7 +103,7 @@ describe('test', function(){
     const start_ts = Date.now()
     const res = await mapConcurrent(values, delayReturnMs, 1)
     expect(res).to.eql(values)
-    // seen this fail once with 76ms instead of 77+. Maybe during a time adjust?
+    // seen this fail once with 75ms and once with 76ms instead of 77+. Maybe during a time adjust?
     expect(Date.now() - start_ts).to.be.greaterThanOrEqual(total_values)
   })
 
@@ -105,6 +113,56 @@ describe('test', function(){
     expect(res).to.eql([30,15,1,29,2])
     expect(Date.now() - start_ts).to.be.greaterThanOrEqual(31)
   })
+  it('should mapConcurrent 3 ascending', async function(){
+    const values = [1,1,2,2,3,3,4,4,5,5,6]
+    const total_values = sumArray(values)
+    const start_ts = Date.now()
+    const res = await mapConcurrent(values, delayReturnMs, 3)
+    expect(res).to.eql(values)
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(14)
+  })
+  it('should mapConcurrent 3 descending', async function(){
+    const values = [6,6,5,5,4,4,3,2,2,1,1]
+    const total_values = sumArray(values)
+    const start_ts = Date.now()
+    const res = await mapConcurrent(values, delayReturnMs, 3)
+    expect(res).to.eql(values)
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(13)
+  })
+  it('should mapConcurrent fill queue except 1', async function(){
+    const values = [15,15,15,15,15,1,5,4,3,1]
+    const total_values = sumArray(values)
+    const start_ts = Date.now()
+    const res = await mapConcurrent(values, delayReturnMs, 3)
+    expect(res).to.eql(values)
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(30)
+  })
+  it('should mapConcurrent 2 with error', async function(){
+    const start_ts = Date.now()
+    try {
+      const res = await mapConcurrent([5,5,false,1,1], delayReturnMsError, 2)
+      expect.fail('no error')
+    } catch (e) {
+      expect(e.message).to.eql('false')
+      expect(Date.now() - start_ts).to.be.greaterThanOrEqual(4)
+    }
+  })
+  it('should mapConcurrent 2 with reject', async function(){
+    const start_ts = Date.now()
+    try {
+      const res = await mapConcurrent([5,5,false,1,1], delayReturnMsReject, 2)
+      expect.fail('no error')
+    } catch (e) {
+      expect(e.message).to.eql('false')
+      expect(Date.now() - start_ts).to.be.greaterThanOrEqual(4)
+    }
+  })
+  it('should mapConcurrent more workers than data', async function(){
+    const start_ts = Date.now()
+    const res = await mapConcurrent([2], delayReturnMs, 5)
+    expect(res).to.eql([2])
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(1)
+  })
   
   it('should mapConcurrent 3 array', async function(){
     const start_ts = Date.now()
@@ -112,6 +170,20 @@ describe('test', function(){
     expect(res).to.eql([30,15,1,29,2])
     expect(Date.now() - start_ts).to.be.greaterThanOrEqual(30)
     expect(Date.now() - start_ts).to.be.lessThan(35)
+  })
+
+  it('should mapConcurrent 7 array', async function(){
+    const start_ts = Date.now()
+    const values = [4,13,1,11,2,7,9,12]
+    const res = await mapConcurrent(values, delayReturnMs, 7)
+    expect(res).to.eql(values)
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(13) // node timer aint ms perfect :/
+    expect(Date.now() - start_ts).to.be.lessThan(17) // could be flakey
+  })
+  it('should mapConcurrent no delay', async function(){
+    const start_ts = Date.now()
+    const res = await mapConcurrent([30,15,1,29,2], Promise.resolve.bind(Promise), 2)
+    expect(res).to.eql([30,15,1,29,2])
   })
 
   it('should mapConcurrent 1 iterator', async function(){
