@@ -109,16 +109,12 @@ export declare function firstInSeriesWithoutError(iterable: Iterable<Promise<any
  * @param     {object}    obj     - The object to resolve properties of
  * @return    {object}    obj     - New object of resolved promise properties
  */
-export declare function allProps(obj: {
-    [key: string]: Promise<any>;
-}): Promise<{
-    [key: string]: any;
-}>;
+export declare function allProps(obj: Record<any, Promise<any>>): Promise<Record<any, any>>;
 type PromiseResolve = (value: any | PromiseLike<any>) => void;
 type PromiseReject = (reason?: any) => void;
 type OuterSettleReturn = [PromiseLike<any>, PromiseResolve, PromiseReject];
 /**
- * Create a promise and return the promise, resolve and reject
+ * Create a promise and return the promise object, resolve and reject
  * Allows you to choose whether to resolve/reject something outside the promise scope
  * @returns {OuterSettleReturn}
  */
@@ -134,11 +130,12 @@ export declare function outerSettle(): OuterSettleReturn;
  * @throws  {Error}
  */
 export declare function waitFor(timeout_ms: number, condition_fn: BoolOrPromiseBoolFunction, { wait_ms, label }?: {
-    wait_ms?: number;
-    label?: string;
+    wait_ms?: number | undefined;
+    label?: string | undefined;
 }): Promise<{
     total_ms: number;
     count: number;
     result: true;
 }>;
 export {};
+//# sourceMappingURL=pinky.d.ts.map

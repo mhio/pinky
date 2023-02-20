@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
     "lib": ["es2017"],
-    "module": "esnext",
-    "target": "es2017",
-    "outDir": "dist",
     "strict": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
+    "sourceMap": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/pinky.ts"]
 }

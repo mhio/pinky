@@ -260,14 +260,14 @@ export async function firstInSeriesWithoutError(iterable: Iterable<Promise<any>>
  * @param     {object}    obj     - The object to resolve properties of
  * @return    {object}    obj     - New object of resolved promise properties
  */
-export async function allProps(obj: { [key: string]: Promise<any> }){
-  const promises: { [key: string]: Promise<any> } = {}
+export async function allProps(obj: Record<any,Promise<any>>){
+  const promises: Record<any,Promise<any>> = {}
   for (const key in obj) {
     const promise = Promise.resolve(obj[key])
     promises[key] = promise
     promise.catch(noop) // ignore rejections for now
   }
-  const results: { [key: string]: any }  = {}
+  const results: Record<any,any> = {}
   for (const key in promises) {
     results[key] = await promises[key]
   }

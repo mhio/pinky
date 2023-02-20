@@ -1,8 +1,8 @@
-const { Readable } = require('node:stream')
-const chai = require('chai')
-chai.use(require('chai-subset'))
-const { expect } = chai
-const {
+import { Readable } from 'node:stream'
+import chai from 'chai'
+import chaiSubset from 'chai-subset'
+
+import {
   outerSettle,
   delay,
   delayFrom,
@@ -17,7 +17,10 @@ const {
   firstInSeriesWithoutError,
   firstWithoutError,
   allProps
-} = require('../../dist/pinky')
+} from '../../dist/pinky.js'
+
+chai.use(chaiSubset)
+const { expect } = chai
 const delay1Ms = (v) => delay(1).then(() => v)
 const delayReturnMs = (v) => delay(v).then(() => v)
 const delayReturnMsReject = (v) => {

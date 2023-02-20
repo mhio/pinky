@@ -1,25 +1,28 @@
 {
   "name": "@mhio/pinky",
   "version": "0.8.0-0",
-  "main": "dist/pinky.js",
   "license": "MIT",
+  "type": "module",
   "exports": {
     ".": {
       "types": "dist/pinky.d.ts",
-      "require": "dist/cjs/pinky.js",
-      "import": "dist/esm/pinky.js",
-      "default": "dist/esm/pinky.js"
+      "require": "dist/cjs/pinky.cjs",
+      "import": "dist/pinky.js",
+      "default": "dist/pinky.js"
     }
   },
+  "module": "dist/pinky.js",
+  "main": "dist/cjs/pinky.cjs",
   "scripts": {
     "test": "mocha test/unit test/int",
+    "test:build": "yarn build:ts && yarn test",
     "test:unit": "mocha test/unit",
     "test:int": "mocha test/int",
     "test:coverage": "nyc _mocha test/unit test/int && nyc report -r html && nyc check-coverage",
     "test:watch": "yarn run watch 'yarn run build && mocha -b test/unit test/int || exit 1'",
     "test:lint": "eslint src/",
     "build": "set -uex; yarn run build:ts; yarn run build:docs",
-    "build:ts": "tsc --downlevelIteration --sourceMap --declaration --outDir dist/ src/pinky.ts",
+    "build:ts": "tsc --build tsconfig.types.json tsconfig.esm.json tsconfig.cjs.json && mv dist/cjs/pinky.js dist/cjs/pinky.cjs",
     "build:docs": "set -uex; yarn run build:docs:md; yarn run build:docs:html",
     "build:docs:md": "typedoc --out docs --plugin typedoc-plugin-markdown --sort static-first --sort alphabetical src/pinky.ts",
     "build:docs:html": "typedoc --out docs/pages --plugin none --theme default --sort static-first --sort alphabetical src/pinky.ts",

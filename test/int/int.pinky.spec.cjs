@@ -14,7 +14,7 @@ const {
   AggregateError,
 } = require('../../')
 
-describe('int::test', function(){
+describe('int::test::cjs', function(){
 
   it('should map', async function(){
     const res = await map([25,1,19,2,24], async (ms) => delay(ms).then(()=> ms))

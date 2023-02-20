@@ -1,9 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/cjs/",
-    "module": "commonjs"
+    "outDir": "./dist/",
+    "module": "esnext",
+    "target": "es2017"
   },
   "include": ["src/pinky.ts"]
 }
+
 
