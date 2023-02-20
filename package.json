@@ -52,5 +52,8 @@
     "async",
     "helper",
     "mhio"
-  ]
+  ],
+  "mocha": {
+    "require": "test/require.js"
+  }
 }

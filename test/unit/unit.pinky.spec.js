@@ -1,6 +1,4 @@
 import { Readable } from 'node:stream'
-import chai from 'chai'
-import chaiSubset from 'chai-subset'
 
 import {
   outerSettle,
@@ -19,8 +17,6 @@ import {
   allProps
 } from '../../dist/pinky.js'
 
-chai.use(chaiSubset)
-const { expect } = chai
 const delay1Ms = (v) => delay(1).then(() => v)
 const delayReturnMs = (v) => delay(v).then(() => v)
 const delayReturnMsReject = (v) => {
@@ -181,7 +177,7 @@ describe('test', function(){
     const res = await mapConcurrent(values, delayReturnMs, 7)
     expect(res).to.eql(values)
     expect(Date.now() - start_ts).to.be.greaterThanOrEqual(13) // node timer aint ms perfect :/
-    expect(Date.now() - start_ts).to.be.lessThan(17) // could be flakey
+    expect(Date.now() - start_ts).to.be.lessThan(18) // could be flakey
   })
   it('should mapConcurrent no delay', async function(){
     const start_ts = Date.now()

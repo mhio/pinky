@@ -1,5 +1,3 @@
-import chai from 'chai'
-import chaiSubset from 'chai-subset'
 import {
   //outerSettle,
   delay,
@@ -14,9 +12,6 @@ import {
 } from '../../dist/pinky.js'
 //} from '../../'
 // would like to test to package.json export here.. but not sure how
-
-chai.use(chaiSubset)
-const { expect } = chai
 
 describe('int::test::mjs', function(){
 
