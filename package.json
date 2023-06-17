@@ -5,15 +5,15 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "dist/pinky.d.ts",
-      "require": "dist/cjs/pinky.cjs",
-      "import": "dist/pinky.js",
-      "default": "dist/pinky.js"
+      "types": "./dist/pinky.d.ts",
+      "require": "./dist/cjs/pinky.cjs",
+      "import": "./dist/pinky.js",
+      "default": "./dist/pinky.js"
     }
   },
-  "module": "dist/pinky.js",
-  "main": "dist/cjs/pinky.cjs",
-  "types": "dist/pinky.d.ts",
+  "module": "./dist/pinky.js",
+  "main": "./dist/cjs/pinky.cjs",
+  "types": "./dist/pinky.d.ts",
   "scripts": {
     "test": "mocha test/unit test/int",
     "test:build": "yarn build:ts && yarn test",
