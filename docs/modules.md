@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[src/pinky.ts:3](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L3)
+[src/pinky.ts:3](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L3)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:2](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L2)
+[src/pinky.ts:2](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L2)
 
 ## Functions
 
@@ -97,7 +97,7 @@ obj     - New object of resolved promise properties
 
 #### Defined in
 
-[src/pinky.ts:263](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L263)
+[src/pinky.ts:263](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L263)
 
 ___
 
@@ -119,7 +119,7 @@ delay for ms
 
 #### Defined in
 
-[src/pinky.ts:15](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L15)
+[src/pinky.ts:15](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L15)
 
 ___
 
@@ -142,7 +142,7 @@ Delay from a timestamp for milliseconds
 
 #### Defined in
 
-[src/pinky.ts:48](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L48)
+[src/pinky.ts:48](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L48)
 
 ___
 
@@ -164,7 +164,7 @@ Delay until a timestamp milliseconds
 
 #### Defined in
 
-[src/pinky.ts:63](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L63)
+[src/pinky.ts:63](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L63)
 
 ___
 
@@ -186,7 +186,7 @@ Run a bunch of promises in series, if the one fails move onto the next.
 
 #### Defined in
 
-[src/pinky.ts:245](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L245)
+[src/pinky.ts:245](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L245)
 
 ___
 
@@ -209,7 +209,7 @@ All promises start resolving immediately.
 
 #### Defined in
 
-[src/pinky.ts:213](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L213)
+[src/pinky.ts:213](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L213)
 
 ___
 
@@ -234,7 +234,7 @@ Array of resolved promises
 
 #### Defined in
 
-[src/pinky.ts:74](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L74)
+[src/pinky.ts:74](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L74)
 
 ___
 
@@ -261,7 +261,7 @@ All promises will resolve,
 
 #### Defined in
 
-[src/pinky.ts:127](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L127)
+[src/pinky.ts:127](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L127)
 
 ___
 
@@ -286,7 +286,7 @@ map an async function in series across an iterable
 
 #### Defined in
 
-[src/pinky.ts:91](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L91)
+[src/pinky.ts:91](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L91)
 
 ___
 
@@ -311,7 +311,7 @@ map an async function in series across an async iterable
 
 #### Defined in
 
-[src/pinky.ts:108](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L108)
+[src/pinky.ts:108](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L108)
 
 ___
 
@@ -325,7 +325,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:6](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L6)
+[src/pinky.ts:6](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L6)
 
 ___
 
@@ -354,7 +354,7 @@ Allows you to choose whether to resolve/reject something outside the promise sco
 
 #### Defined in
 
-[src/pinky.ts:282](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L282)
+[src/pinky.ts:282](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L282)
 
 ___
 
@@ -382,7 +382,7 @@ Wait until a timestamp or some condition function to become truthey. Can be an a
 
 #### Defined in
 
-[src/pinky.ts:309](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L309)
+[src/pinky.ts:309](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L309)
 
 ___
 
@@ -411,7 +411,7 @@ if you need to inspect results include some type of id in the return.
 
 #### Defined in
 
-[src/pinky.ts:164](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L164)
+[src/pinky.ts:164](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L164)
 
 ___
 
@@ -440,4 +440,4 @@ if you need to inspect results include some type of id in the return.
 
 #### Defined in
 
-[src/pinky.ts:190](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L190)
+[src/pinky.ts:190](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L190)

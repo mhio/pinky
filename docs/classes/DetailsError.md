@@ -10,9 +10,9 @@
 
 ## Table of contents
 
-### Methods
+### Constructors
 
-- [captureStackTrace](DetailsError.md#capturestacktrace)
+- [constructor](DetailsError.md#constructor)
 
 ### Properties
 
@@ -23,36 +23,30 @@
 - [name](DetailsError.md#name)
 - [stack](DetailsError.md#stack)
 
-### Constructors
+### Methods
 
-- [constructor](DetailsError.md#constructor)
+- [captureStackTrace](DetailsError.md#capturestacktrace)
 
-## Methods
+## Constructors
 
-### captureStackTrace
+### constructor
 
-▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
-
-Create .stack property on a target object
+• **new DetailsError**(`message`, `details`)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `targetObject` | `object` |
-| `constructorOpt?` | `Function` |
+| `message` | `string` |
+| `details` | `any` |
 
-#### Returns
+#### Overrides
 
-`void`
-
-#### Inherited from
-
-Error.captureStackTrace
+Error.constructor
 
 #### Defined in
 
-node_modules/@types/node/globals.d.ts:4
+[src/pinky.ts:226](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L226)
 
 ## Properties
 
@@ -111,7 +105,7 @@ ___
 
 #### Defined in
 
-[src/pinky.ts:225](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L225)
+[src/pinky.ts:225](https://github.com/mhio/pinky/blob/cf5f758/src/pinky.ts#L225)
 
 ___
 
@@ -125,7 +119,7 @@ Error.message
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1054
+node_modules/typescript/lib/lib.es5.d.ts:1068
 
 ___
 
@@ -139,7 +133,7 @@ Error.name
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1053
+node_modules/typescript/lib/lib.es5.d.ts:1067
 
 ___
 
@@ -153,25 +147,31 @@ Error.stack
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:1055
+node_modules/typescript/lib/lib.es5.d.ts:1069
 
-## Constructors
+## Methods
 
-### constructor
+### captureStackTrace
 
-• **new DetailsError**(`message`, `details`)
+▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
+
+Create .stack property on a target object
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `message` | `string` |
-| `details` | `any` |
+| `targetObject` | `object` |
+| `constructorOpt?` | `Function` |
 
-#### Overrides
+#### Returns
 
-Error.constructor
+`void`
+
+#### Inherited from
+
+Error.captureStackTrace
 
 #### Defined in
 
-[src/pinky.ts:226](https://github.com/mhio/pinky/blob/a834f6e/src/pinky.ts#L226)
+node_modules/@types/node/globals.d.ts:4

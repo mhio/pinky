@@ -110,17 +110,12 @@ export async function mapSeriesAsync(iterable, asyncFn) {
     const results = [];
     let i = 0;
     try {
-        for (var _d = true, iterable_1 = __asyncValues(iterable), iterable_1_1; iterable_1_1 = await iterable_1.next(), _a = iterable_1_1.done, !_a;) {
+        for (var _d = true, iterable_1 = __asyncValues(iterable), iterable_1_1; iterable_1_1 = await iterable_1.next(), _a = iterable_1_1.done, !_a; _d = true) {
             _c = iterable_1_1.value;
             _d = false;
-            try {
-                const e = _c;
-                results.push(await asyncFn(e, i));
-                i++;
-            }
-            finally {
-                _d = true;
-            }
+            const e = _c;
+            results.push(await asyncFn(e, i));
+            i++;
         }
     }
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
