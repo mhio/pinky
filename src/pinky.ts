@@ -275,29 +275,26 @@ export async function allProps(obj: Record<any,Promise<any>>){
 }
 
 
-type PromiseResolve = (value: any | PromiseLike<any>) => void
-type PromiseReject = (reason?: any) => void
-type OuterSettleReturn = [ PromiseLike<any>, PromiseResolve, PromiseReject]
-// interface OuterSettleReturn {
-//   promise: PromiseLike<any>
-//   resolve: PromiseResolve
-//   reject: PromiseReject
-// }
 /**
  * Create a promise and return the promise object, resolve and reject
  * Allows you to choose whether to resolve/reject something outside the promise scope
- * @returns {OuterSettleReturn}
  */
-export function outerSettle(): OuterSettleReturn {
-  let outerResolve!: PromiseResolve
-  let outerReject!: PromiseReject
-  const promise = new Promise(function (resolve, reject) {
-    outerResolve = resolve
-    outerReject = reject
+export function outerSettlePromise<T>(): { promise: Promise<T>, resolve: any, reject: any }
+{
+  let outerResolve!: (value: T | PromiseLike<T>) => void
+  let outerReject!: (reason?: any) => void
+  const promise = new Promise<T>(function (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) {
+      outerResolve = resolve;
+      outerReject = reject;
   })
-  // return { promise, resolve: outerResolve, reject: outerReject }
-  return [ promise, outerResolve, outerReject ]
+
+  return {
+    promise,
+    resolve: outerResolve,
+    reject: outerReject,
+  }
 }
+
 
 /**
  * Wait until a timestamp or some condition function to become truthey. Can be an async or standard function  

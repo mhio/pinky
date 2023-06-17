@@ -69,7 +69,7 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 exports.__esModule = true;
-exports.waitFor = exports.outerSettle = exports.allProps = exports.firstInSeriesWithoutError = exports.AggregateError = exports.DetailsError = exports.firstWithoutError = exports.workerAllAsync = exports.workerAll = exports.mapConcurrent = exports.mapSeriesAsync = exports.mapSeries = exports.map = exports.delayTo = exports.delayFrom = exports.delay = exports.noop = void 0;
+exports.waitFor = exports.outerSettlePromise = exports.allProps = exports.firstInSeriesWithoutError = exports.AggregateError = exports.DetailsError = exports.firstWithoutError = exports.workerAllAsync = exports.workerAll = exports.mapConcurrent = exports.mapSeriesAsync = exports.mapSeries = exports.map = exports.delayTo = exports.delayFrom = exports.delay = exports.noop = void 0;
 //export function noop(...args: any[]) : any {
 function noop() {
     // do nothing.
@@ -612,27 +612,24 @@ function allProps(obj) {
     });
 }
 exports.allProps = allProps;
-// interface OuterSettleReturn {
-//   promise: PromiseLike<any>
-//   resolve: PromiseResolve
-//   reject: PromiseReject
-// }
 /**
  * Create a promise and return the promise object, resolve and reject
  * Allows you to choose whether to resolve/reject something outside the promise scope
- * @returns {OuterSettleReturn}
  */
-function outerSettle() {
+function outerSettlePromise() {
     var outerResolve;
     var outerReject;
     var promise = new Promise(function (resolve, reject) {
         outerResolve = resolve;
         outerReject = reject;
     });
-    // return { promise, resolve: outerResolve, reject: outerReject }
-    return [promise, outerResolve, outerReject];
+    return {
+        promise: promise,
+        resolve: outerResolve,
+        reject: outerReject
+    };
 }
-exports.outerSettle = outerSettle;
+exports.outerSettlePromise = outerSettlePromise;
 /**
  * Wait until a timestamp or some condition function to become truthey. Can be an async or standard function
  * @param   {number}    timeout_ms       - The `Date` timestamp to wait until

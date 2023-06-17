@@ -1,7 +1,7 @@
 import { Readable } from 'node:stream'
 
 import {
-  outerSettle,
+  outerSettlePromise,
   delay,
   delayFrom,
   delayTo,
@@ -311,20 +311,20 @@ describe('test', function(){
 
 
   it('outerSettle returns things', async function(){
-    const [ p, resolve, reject ] = outerSettle()
+    const { promise, resolve, reject } = outerSettlePromise()
     expect(resolve).to.be.a('function')
     expect(reject).to.be.a('function')
   })
   it('outerSettle resolves things', async function(){
-    const [ p, resolve, reject ] = outerSettle()
+    const { promise, resolve, reject } = outerSettlePromise()
     resolve(true)
-    expect(await p).to.equal(true)
+    expect(await promise).to.equal(true)
   })
   it('outerSettle rejects things', async function(){
-    const [ p, resolve, reject ] = outerSettle()
+    const { promise, resolve, reject } = outerSettlePromise()
     try {
       reject(new Error('gahhhhh'))
-      await p
+      await promise
       expect.fail('should not get here')
     }
     catch (error){
