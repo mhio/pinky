@@ -115,9 +115,9 @@ export declare function allProps(obj: Record<any, Promise<any>>): Promise<Record
  * Allows you to choose whether to resolve/reject something outside the promise scope
  */
 export declare function outerSettlePromise<T>(): {
-    promise: Promise<T>;
-    resolve: any;
-    reject: any;
+    promise: PromiseLike<T>;
+    resolve: (value: T | PromiseLike<T>) => void;
+    reject: (reason?: any) => void;
 };
 /**
  * Wait until a timestamp or some condition function to become truthey. Can be an async or standard function

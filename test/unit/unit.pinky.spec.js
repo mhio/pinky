@@ -176,8 +176,8 @@ describe('test', function(){
     const values = [4,13,1,11,2,7,9,12]
     const res = await mapConcurrent(values, delayReturnMs, 7)
     expect(res).to.eql(values)
-    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(13) // node timer aint ms perfect :/
-    expect(Date.now() - start_ts).to.be.lessThan(18) // could be flakey
+    expect(Date.now() - start_ts).to.be.greaterThanOrEqual(12) // node timer aint ms perfect :/
+    expect(Date.now() - start_ts).to.be.lessThan(17) // could be flakey
   })
   it('should mapConcurrent no delay', async function(){
     const start_ts = Date.now()

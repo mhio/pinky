@@ -279,7 +279,11 @@ export async function allProps(obj: Record<any,Promise<any>>){
  * Create a promise and return the promise object, resolve and reject
  * Allows you to choose whether to resolve/reject something outside the promise scope
  */
-export function outerSettlePromise<T>(): { promise: Promise<T>, resolve: any, reject: any }
+export function outerSettlePromise<T>(): {
+  promise: PromiseLike<T>,
+  resolve: (value: T | PromiseLike<T>) => void,
+  reject: (reason?: any) => void
+}
 {
   let outerResolve!: (value: T | PromiseLike<T>) => void
   let outerReject!: (reason?: any) => void

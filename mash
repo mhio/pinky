@@ -20,6 +20,17 @@ run:watch () {
   nodemon -e sh,ts,json -i .git -x "$@"
 } 
 
+run:test:50 () {
+  i=0;
+  while yarn test; do
+    let i=i+1;
+    if [ $i -gt 50 ]; then
+      echo "done 50"
+      break
+    fi
+  done
+}
+
 
 # {make.sh common}
 run:completion:words(){
